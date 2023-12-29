@@ -1,6 +1,3 @@
--- shared.lua
-
--- Constant for maximum despair value
 MAX_DESPAIR = 100
 
 -- Function to get a player's current despair level
