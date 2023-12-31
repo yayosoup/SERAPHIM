@@ -12,7 +12,7 @@ local function IncrementDespair()
     end
 end
 
-timer.Create("DespairIncrementTimer", 2, 0, IncrementDespair)
+timer.Create("DespairIncrementTimer", 120, 0, IncrementDespair)
 
 hook.Add("Think", "DespairDeathCheck", function()
     for _, ply in ipairs(player.GetAll()) do
