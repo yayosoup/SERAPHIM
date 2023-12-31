@@ -3,6 +3,7 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
 
     -- REGISTER NEEDED VARIABLES :D
     DarkRP.registerDarkRPVar("despair", net.WriteDouble, net.ReadDouble)
+    DarkRP.registerDarkRPVar("salesTax", net.WriteDouble, net.ReadDouble)
 
 
     sf = sf or {}
