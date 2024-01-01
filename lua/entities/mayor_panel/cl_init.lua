@@ -47,7 +47,7 @@ net.Receive("isMayor", function()
         draw.RoundedBox(0, 0, 0, w, h, Color(50,50,50,50))
     end
 
-
+-- i love this
 
 
 
