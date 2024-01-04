@@ -4,6 +4,15 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
     -- REGISTER NEEDED VARIABLES :D
     DarkRP.registerDarkRPVar("despair", net.WriteDouble, net.ReadDouble)
     DarkRP.registerDarkRPVar("salesTax", net.WriteDouble, net.ReadDouble)
+    DarkRP.registerDarkRPVar("hasMission", net.WriteBool, net.ReadBool)
+
+    -- sv_objective.lua
+    hook.Add("PlayerInitialSpawn", "sv_objective", function(ply)
+        ply:setDarkRPVar("hasMission", false)
+    end)
+
+    DarkRP.registerDarkRPVar("massacreMission", net.WriteInt, net.ReadInt)
+    DarkRP.registerDarkRPVar("currentMission", net.WriteString, net.ReadString)
 
 
     sf = sf or {}
@@ -20,6 +29,9 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         { name = "cl_wanted", modulePath = "wanted/", type = "CLIENT" },
         { name = "sv_wanted", modulePath = "wanted/", type = "SERVER" },
         { name = "sh_wanted", modulePath = "wanted/", type = "SHARED" },
+        { name = "sv_objective", modulePath = "objective/", type = "SERVER" },
+        { name = "sh_objective", modulePath = "objective/", type = "SHARED" },
+        { name = "cl_objective", modulePath = "objective/", type = "CLIENT" },
     }
 
     function sf.Load()
