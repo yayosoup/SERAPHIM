@@ -1,18 +1,20 @@
 hook.Add("DarkRPFinishedLoading", "sfloader", function()
     print("sf_loader has intialized!")
 
-    -- REGISTER NEEDED VARIABLES :D
+    -- REGISTER NEEDED VARIABLES DarkRP
     DarkRP.registerDarkRPVar("despair", net.WriteDouble, net.ReadDouble)
     DarkRP.registerDarkRPVar("salesTax", net.WriteDouble, net.ReadDouble)
     DarkRP.registerDarkRPVar("hasMission", net.WriteBool, net.ReadBool)
 
     -- sv_objective.lua
+    DarkRP.registerDarkRPVar("currentMission", net.WriteString, net.ReadString)
+
+
     hook.Add("PlayerInitialSpawn", "sv_objective", function(ply)
         ply:setDarkRPVar("hasMission", false)
     end)
 
-    DarkRP.registerDarkRPVar("massacreMission", net.WriteInt, net.ReadInt)
-    DarkRP.registerDarkRPVar("currentMission", net.WriteString, net.ReadString)
+
 
 
     sf = sf or {}
