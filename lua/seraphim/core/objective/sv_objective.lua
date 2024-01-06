@@ -5,7 +5,7 @@ util.AddNetworkString("startQuest")
 local missions = {
     ["Massacre"] = {
         name = "Massacre",
-        desc = "kill 3 people",
+        desc = "Kill 3 people",
         isComplete = function(ply)
             local checkKills = ply:GetNWInt("killCount")
             return checkKills >= 3
@@ -28,7 +28,6 @@ timer.Create("CheckMissionStatus", 2, 0, function()
         if hasMission then
             local missionName = ply:getDarkRPVar("currentMission")
             print("Player " .. ply:Nick() .. " has a mission. The mission is: " .. missionName)
-            ply:setDarkRPVar("hasMission", false)
         elseif hasMission == false or hasMission == nil then
             print("Player " .. ply:Nick() .. " has no mission, giving one.")
             assignMission(ply)
