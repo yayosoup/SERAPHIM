@@ -1,0 +1,8 @@
+net.Receive("startHabit", function()
+    print("startHabit received")
+    local habitName = net.ReadString()
+    local description = net.ReadString()
+    --surface.PlaySound("garrysmod/save_load2.wav")
+    chat.AddText(Color(255, 0, 0), "YOU SUFFER FROM: " .. habitName .. ".")
+    chat.AddText(Color(255, 0, 0), description)
+end)

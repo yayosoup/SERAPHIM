@@ -34,6 +34,9 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         { name = "sv_objective", modulePath = "objective/", type = "SERVER" },
         { name = "sh_objective", modulePath = "objective/", type = "SHARED" },
         { name = "cl_objective", modulePath = "objective/", type = "CLIENT" },
+        { name = "sv_habits", modulePath = "habits/", type = "SERVER" },
+        { name = "sh_habits", modulePath = "habits/", type = "SHARED" },
+        { name = "cl_habits", modulePath = "habits/", type = "CLIENT" },
     }
 
     function sf.Load()
