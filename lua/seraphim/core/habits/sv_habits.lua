@@ -10,6 +10,13 @@ end
 function meta:remove_parasocial()
     self.parasocial = nil
 end
+function meta:antisocial()
+    print("feeling antisocial right now...")
+end
+
+function meta:remove_antisocial()
+    self.antisocial = nil
+end
 
 habits = {
     ["parasocial"] = {
@@ -17,6 +24,11 @@ habits = {
         desc = "The presence of others comforts you.",
         effect = meta.parasocial
     },
+    ["antisocial"] = {
+        name = "Antisocial",
+        desc = "The presence of others worries you.",
+        effect = meta.antisocial,
+    }
 }
 
 hook.Add("PlayerSpawn", "GiveHabit", function(ply)
