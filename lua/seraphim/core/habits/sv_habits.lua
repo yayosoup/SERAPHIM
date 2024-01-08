@@ -2,21 +2,28 @@ print("sv_habits.lua loaded!")
 util.AddNetworkString("startHabit")
 
 local meta = FindMetaTable("Player")
-
-function meta:parasocial()
-    print("feeling parasocial right now...")
-end
-
+------------------------------------------------------------ ☆*: .｡. o(≧▽≦)o .｡.:*☆
+-- Parasocial Functions🎀
 function meta:remove_parasocial()
+    print("Player died. Removing parasocial effect.")
     self.parasocial = nil
 end
-function meta:antisocial()
-    print("feeling antisocial right now...")
-end
+------------------------------------------------------------ (❁´◡`❁)
+function meta:parasocial()
+    print("feeling parasocial right now...")
 
+    hook.Add("PlayerDeath", "RemoveParasocial", self:remove_parasocial())
+end
+------------------------------------------------------------ ☆*: .｡. o(≧▽≦)o .｡.:*☆
+-- Antisocial Functions🎀
 function meta:remove_antisocial()
     self.antisocial = nil
 end
+function meta:antisocial()
+    print("feeling antisocial right now...")
+    hook.Add("PlayerDeath", "RemoveAntisocial", self:remove_antisocial())
+end
+------------------------------------------------------------ (❁´◡`❁)
 
 habits = {
     ["parasocial"] = {
