@@ -12,7 +12,7 @@ net.Receive("zomboStart", function()
     print("xombo received on client :3")
 
     zomboPanel = vgui.Create("DFrame")
-    zomboPanel:SetSize(ScrW() * 0.53, ScrH() * 0.4)
+    zomboPanel:SetSize(ScrW() * 0.25, ScrH() * 0.4)
     zomboPanel:Center()
     zomboPanel:SetTitle("You can do anything.")
     zomboPanel:ShowCloseButton(false)
@@ -35,6 +35,14 @@ net.Receive("zomboStart", function()
             zomboPanel:Close()
         end
     end
+
+    local cellsCheck = vgui.Create("DLabel", zomboPanel)
+    cellsCheck:SetPos(ScrW() * 0.006, ScrH() * 0.03)
+    cellsCheck:SetText("You have x cells.")
+    cellsCheck:SetAutoStretchVertical(true)
+    cellsCheck:SetWrap(true)
+    cellsCheck:SetContentAlignment(7)
+    cellsCheck:SetSize(zomboPanel:GetWide() * 0.98, ScrH() * 0.1)
 
     zomboPanel.OnClose = function()
         zomboPanel = nil

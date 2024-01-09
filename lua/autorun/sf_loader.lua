@@ -14,7 +14,8 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         ply:setDarkRPVar("hasMission", false)
     end)
 
-
+    -- sv_cells.lua
+    DarkRP.registerDarkRPVar("cells", net.WriteDouble, net.ReadDouble)
 
 
     sf = sf or {}
@@ -37,6 +38,8 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         { name = "sv_habits", modulePath = "habits/", type = "SERVER" },
         { name = "sh_habits", modulePath = "habits/", type = "SHARED" },
         { name = "cl_habits", modulePath = "habits/", type = "CLIENT" },
+        { name = "sv_cells", modulePath = "cells/", type = "SERVER" },
+        { name = "cl_cells", modulePath = "cells/", type = "CLIENT" },
     }
 
     function sf.Load()
