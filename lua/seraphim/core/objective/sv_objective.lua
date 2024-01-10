@@ -21,7 +21,7 @@ function assignMission(ply)
     end
 end
 
-timer.Create("CheckMissionStatus", 2, 0, function()
+timer.Create("CheckMissionStatus", 50, 0, function()
     print("Checking mission status...")
     for _, ply in ipairs(player.GetAll()) do
         local hasMission = ply:getDarkRPVar("hasMission")

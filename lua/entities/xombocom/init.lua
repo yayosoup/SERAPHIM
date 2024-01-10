@@ -3,6 +3,8 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 util.AddNetworkString("zomboStart")
+util.AddNetworkString("CurrentCells")
+
 
 function ENT:Initialize()
     self:SetModel("models/props_combine/combine_interface001.mdl")
@@ -18,6 +20,16 @@ end
 function ENT:Use(ply)
     print("used on server!")
     net.Start("zomboStart")
+    net.Send(ply)
+
+    net.Start("currentCells")
+        net.Send(ply)
+    net.Send(ply)
+
+
+    local cells = ply:GetPData("CurrentCells", "")
+    net.Start("currentCells")
+        net.WriteString(cells)
     net.Send(ply)
 end
 

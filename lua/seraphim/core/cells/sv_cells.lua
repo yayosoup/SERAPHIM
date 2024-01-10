@@ -19,4 +19,4 @@ hook.Add("PlayerInitialSpawn", "LoadCells", function(ply)
     ply:setDarkRPVar("cells", savedCells)
 end)
 
-timer.Create("CellsIncrementTimer", 10, 0, IncrementCells)
+--timer.Create("CellsIncrementTimer", 10, 0, IncrementCells)
