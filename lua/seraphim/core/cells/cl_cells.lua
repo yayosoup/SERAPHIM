@@ -5,5 +5,5 @@ net.Receive("UpdateDespair", function()
 end)
 
 hook.Add("HUDPaint", "DrawCellsDebug", function()
-    draw.SimpleText("Cells: " .. cells, "Default", ScrW() / 2, ScrH() / 1.5, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Cells: " .. cells, "Default", ScrW() / 45, ScrH() / 1.9, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end)

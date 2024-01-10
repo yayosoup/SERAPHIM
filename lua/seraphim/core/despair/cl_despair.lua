@@ -5,5 +5,5 @@ net.Receive("UpdateDespair", function()
 end)
 
 hook.Add("HUDPaint", "DrawDespair", function()
-    draw.SimpleText("Despair: " .. despair, "Default", ScrW() / 2, ScrH() / 2, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Despair: " .. despair, "Default", ScrW() / 45, ScrH() / 2, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end)
