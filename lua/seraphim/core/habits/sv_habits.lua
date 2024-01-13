@@ -35,6 +35,11 @@ habits = {
         name = "Antisocial",
         desc = "The presence of others worries you.",
         effect = meta.antisocial,
+    },
+    ["wrath"] = {
+        name = "Wrath",
+        desc = "The existence of others bothers you.",
+        effect = meta.wrath
     }
 }
 
