@@ -24,6 +24,16 @@ function meta:antisocial()
     hook.Add("PlayerDeath", "RemoveAntisocial", self:remove_antisocial())
 end
 ------------------------------------------------------------ (❁´◡`❁)
+------------------------------------------------------------ ☆*: .｡. o(≧▽≦)o .｡.:*☆
+-- Wrath Functions🎀
+function meta:remove_wrath()
+    self.wrath = nil
+end
+function meta:wrath()
+    print("feeling antisocial right now...")
+    hook.Add("PlayerDeath", "RemoveWrath", self:remove_wrath())
+end
+------------------------------------------------------------ (❁´◡`❁)
 
 habits = {
     ["parasocial"] = {
