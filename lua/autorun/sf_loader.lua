@@ -38,6 +38,9 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         { name = "sv_habits", modulePath = "habits/", type = "SERVER" },
         { name = "sh_habits", modulePath = "habits/", type = "SHARED" },
         { name = "cl_habits", modulePath = "habits/", type = "CLIENT" },
+        { name = "sv_purge", modulePath = "purge/", type = "SERVER" },
+        { name = "sh_purge", modulePath = "purge/", type = "SHARED" },
+        { name = "cl_purge", modulePath = "purge/", type = "CLIENT" },
         { name = "sv_cells", modulePath = "cells/", type = "SERVER" },
         { name = "cl_cells", modulePath = "cells/", type = "CLIENT" },
     }
