@@ -14,12 +14,16 @@ function start_purge()
     print("Starting the purge!!!")
     purge_status = 1
 
+    for i,v in pairs(player.GetAll()) do
+        v:SetNWInt("kills", 0)
+    end
 
 
     timer.Create("PurgeTimer", 5, 1, function()
         hook.Add("PlayerDeath", "Kill Tracker", function(victim, inflictor, attacker)
             if victim == attacker then return end
             if attacker:IsPlayer() then
+                -- TODO: idk idk seems shit 
                 attacker:SetNWInt("kills", attacker:GetNWInt("kills") + 1)
             end
         end)

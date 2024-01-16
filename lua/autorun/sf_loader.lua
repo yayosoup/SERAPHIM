@@ -26,23 +26,31 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
     }
 
     sf.Files = {
+        -- despair mechanics, like a reverse health system, reach 100 and you die. various activities remove/give despair.
         { name = "sh_despair", modulePath = "despair/", type = "SHARED" },
         { name = "sv_despair", modulePath = "despair/", type = "SERVER" },
         { name = "cl_despair", modulePath = "despair/", type = "CLIENT" },
+        -- still uses normal darkrp wanted system, but adds a few more features
         { name = "cl_wanted", modulePath = "wanted/", type = "CLIENT" },
         { name = "sv_wanted", modulePath = "wanted/", type = "SERVER" },
         { name = "sh_wanted", modulePath = "wanted/", type = "SHARED" },
+        -- objective system, missions from god, gives players guidence on what to do. clears boredom *maybe*
         { name = "sv_objective", modulePath = "objective/", type = "SERVER" },
         { name = "sh_objective", modulePath = "objective/", type = "SHARED" },
         { name = "cl_objective", modulePath = "objective/", type = "CLIENT" },
+        -- habit system, player spawns with a habit, habits are generally bad but they're basically a lifelong mission from god, not sure how to make it fun.
         { name = "sv_habits", modulePath = "habits/", type = "SERVER" },
         { name = "sh_habits", modulePath = "habits/", type = "SHARED" },
         { name = "cl_habits", modulePath = "habits/", type = "CLIENT" },
+        -- purge system, 
         { name = "sv_purge", modulePath = "purge/", type = "SERVER" },
         { name = "sh_purge", modulePath = "purge/", type = "SHARED" },
         { name = "cl_purge", modulePath = "purge/", type = "CLIENT" },
         { name = "sv_cells", modulePath = "cells/", type = "SERVER" },
         { name = "cl_cells", modulePath = "cells/", type = "CLIENT" },
+        -- dopamine farmers, kill sound effects, etc.
+        { name = "sv_dopamine", modulePath = "dopamine/", type = "SERVER" },
+        { name = "cl_dopamine", modulePath = "dopamine/", type = "CLIENT" },
     }
 
     function sf.Load()
