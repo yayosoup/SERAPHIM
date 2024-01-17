@@ -3,8 +3,26 @@ print("sv_purge.lua started")
 local purge_status = 0
 
 util.AddNetworkString("updatePurgeStatus")
+util.AddNetworkString("tellPurgeVictor")
+
 
 local function end_purge()
+
+    local highestKill = 0
+    local highestKillPlayer
+
+    for i,v in pairs(player.GetAll()) do
+        local checkKill = v:GetNWInt("kills")
+        if checkKill > highestKill then
+            highestKill = checkKill
+            highestKillPlayer = v
+        end
+    end
+
+    net.Start("tellPurgeVictor")
+        net.WriteEntity(highestKillPlayer)
+        net.WriteInt(highestKill, 4)
+    net.Broadcast()
 
     purge_status = 0
     updatePurgeClient()
