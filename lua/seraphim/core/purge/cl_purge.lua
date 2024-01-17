@@ -22,3 +22,11 @@ net.Receive("noPurgeVictor", function()
     chat.AddText(color_white, "The purge has ended!")
     chat.AddText(color_white, "Nobody participated in the purge!")
 end)
+
+net.Receive("startClientTiedPurge", function()
+    local victor = net.ReadString()
+    local tiedVictor = net.ReadString()
+    local count = net.ReadInt(4)
+
+    chat.AddText(color_white, victor .. " and " .. tiedVictor .. " haved tied. With the highest kill count of: " .. count .. " kills!")
+end)

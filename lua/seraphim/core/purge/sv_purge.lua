@@ -6,23 +6,37 @@ util.AddNetworkString("updatePurgeStatus")
 util.AddNetworkString("tellPurgeVictor")
 util.AddNetworkString("noPurgeVictor")
 util.AddNetworkString("startClientPurge")
+util.AddNetworkString("startClientTiedPurge")
 
 
 local function end_purge()
 
     local highestKill = 0
     local highestKillPlayer
+    local isTied = true
+    local tiedPlayer
 
     for i,v in pairs(player.GetAll()) do
         local checkKill = v:GetNWInt("kills")
         if checkKill > highestKill then
             highestKill = checkKill
             highestKillPlayer = v
+        elseif checkKill == highestKill then
+            isTied = true
+            tiedPlayer = v
         end
     end
 
     if highestKill == 0 then
         net.Start("noPurgeVictor")
+        net.Broadcast()
+    elseif isTied then
+        sendVictor = highestKillPlayer:Nick()
+        sendTied = tiedPlayer:Nick()
+        net.Start("startClientTiedPurge")
+            net.WriteString(sendVictor)
+            net.WriteString(sendTied)
+            net.WriteInt(highestKill, 4)
         net.Broadcast()
     else
         sendVictor = highestKillPlayer:Nick()
@@ -54,7 +68,6 @@ function start_purge()
         hook.Add("PlayerDeath", "Kill Tracker", function(victim, inflictor, attacker)
             if victim == attacker then return end
             if attacker:IsPlayer() then
-                -- TODO: idk idk seems shit 
                 attacker:SetNWInt("kills", attacker:GetNWInt("kills") + 1)
             end
         end)
