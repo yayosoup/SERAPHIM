@@ -4,6 +4,8 @@ local purge_status = 0
 
 util.AddNetworkString("updatePurgeStatus")
 util.AddNetworkString("tellPurgeVictor")
+util.AddNetworkString("noPurgeVictor")
+util.AddNetworkString("startClientPurge")
 
 
 local function end_purge()
@@ -19,16 +21,25 @@ local function end_purge()
         end
     end
 
-    net.Start("tellPurgeVictor")
-        net.WriteEntity(highestKillPlayer)
-        net.WriteInt(highestKill, 4)
-    net.Broadcast()
+    if highestKill == 0 then
+        net.Start("noPurgeVictor")
+        net.Broadcast()
+    else
+        sendVictor = highestKillPlayer:Nick()
+        net.Start("tellPurgeVictor")
+            net.WriteString(sendVictor)
+            net.WriteInt(highestKill, 4)
+        net.Broadcast()
+    end
+
 
     purge_status = 0
-    updatePurgeClient()
 end
 
 function start_purge()
+    net.Start("startClientPurge")
+    net.Broadcast()
+
     print("Starting the purge!!!")
     purge_status = 1
 
@@ -37,7 +48,8 @@ function start_purge()
     end
 
 
-    timer.Create("PurgeTimer", 5, 1, function()
+    timer.Create("PurgeTimer", 30, 1, function()
+
         hook.Add("PlayerDeath", "Kill Tracker", function(victim, inflictor, attacker)
             if victim == attacker then return end
             if attacker:IsPlayer() then
@@ -52,21 +64,17 @@ function start_purge()
 
 end
 
-function updatePurgeClient()
-    net.Start("updatePurgeStatus")
-        net.WriteInt(purge_status, 4)
-    net.Broadcast()
-end
+local TIME_BETWEEN_PURGE = 15
 
-timer.Create("PurgeStarter", 15, 0, function()
+timer.Create("PurgeStarter", TIME_BETWEEN_PURGE, 0, function()
+    if TIME_BETWEEN_PURGE == 3 then
+        timer.Create("CountdownToOne", 1, 3, function()
+            local countdown = 3 - timer.RepsLeft("CountdownToOne") + 1
+            chat.AddText(countdown .. "...")
+        end)
+    end
     start_purge()
 end)
-
-
-
-
-
-
 
 
 
