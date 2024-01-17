@@ -47,6 +47,7 @@ function start_purge()
         v:SetNWInt("kills", 0)
     end
 
+    timer.Stop("PurgeStarter")
 
     timer.Create("PurgeTimer", 30, 1, function()
 
@@ -60,6 +61,7 @@ function start_purge()
 
         print("Ending the purge now!!!")
         end_purge()
+        timer.Start("PurgeStarter")
     end)
 
 end
@@ -67,13 +69,8 @@ end
 local TIME_BETWEEN_PURGE = 15
 
 timer.Create("PurgeStarter", TIME_BETWEEN_PURGE, 0, function()
-    if TIME_BETWEEN_PURGE == 3 then
-        timer.Create("CountdownToOne", 1, 3, function()
-            local countdown = 3 - timer.RepsLeft("CountdownToOne") + 1
-            chat.AddText(countdown .. "...")
-        end)
-    end
     start_purge()
+
 end)
 
 
