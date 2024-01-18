@@ -7,9 +7,12 @@ util.AddNetworkString("tellPurgeVictor")
 util.AddNetworkString("noPurgeVictor")
 util.AddNetworkString("startClientPurge")
 util.AddNetworkString("startClientTiedPurge")
+util.AddNetworkString("endClientPurge")
 
 
 local function end_purge()
+    net.Start("endClientPurge")
+    net.Broadcast()
 
     local highestKill = 0
     local highestKillPlayer
