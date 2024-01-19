@@ -1,3 +1,4 @@
+
 hook.Add("DarkRPFinishedLoading", "sfloader", function()
     print("sf_loader has intialized!")
 
@@ -69,6 +70,7 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         end
     end
 
+    
     sf.Load()
 
 
