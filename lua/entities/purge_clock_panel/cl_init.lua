@@ -28,10 +28,13 @@ function ENT:Draw()
         surface.SetDrawColor(210, 31, 60)
         surface.DrawRect(-1380, -1420, 2845, 2370)
 
+        surface.SetDrawColor(0, 0, 0)
+        surface.DrawRect(-1000, -1370, 1000, 2270)
+
         imgui.End3D2D()
     end
     if imgui.Entity3D2D(self, Vector(24,-4,1.6), Angle(0,0,0), 1) then
-        draw.SimpleText("PURGE", "AWESOME", -25, 0, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("PURGE", "AWESOME", -25, -75, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
         imgui.End3D2D()
     end
