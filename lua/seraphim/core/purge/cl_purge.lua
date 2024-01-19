@@ -51,6 +51,7 @@ net.Receive("startClientPurge", function ()
         draw.SimpleText("PURGE", "finalsSubtitle", ScrW() / 2, ScrH() / 5.5, Color(210, 31, 60), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end)
 
+
 end)
 net.Receive("tellPurgeVictor", function()
     local victor = net.ReadString()
@@ -81,4 +82,8 @@ end
 net.Receive("endClientPurge", function()
     print(" end client purge! ")
     cleanup_purgehud()
+end)
+
+net.Receive("sendPurgeCheer", function()
+    surface.PlaySound("kidneydagger/radio.wav")
 end)
