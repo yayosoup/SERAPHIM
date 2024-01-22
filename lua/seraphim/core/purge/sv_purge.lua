@@ -69,7 +69,7 @@ function start_purge()
 
     timer.Create("PurgeTimer", 10, 1, function()
 
-        hook.Add("PlayerDeath", "Kill Tracker", function(victim, inflictor, attacker)
+        hook.Add("PlayerDeath", "killTracker", function(victim, inflictor, attacker)
             if victim == attacker then return end
             if attacker:IsPlayer() then
                 attacker:SetNWInt("kills", attacker:GetNWInt("kills") + 1)
@@ -82,6 +82,7 @@ function start_purge()
         end_purge()
         timer.Start("PurgeStarter")
     end)
+
 
 end
 
