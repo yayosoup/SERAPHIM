@@ -24,9 +24,9 @@ function ENT:Use(ply)
 
 
 
-    local cells = ply:GetPData("cells", 1)
+    local cells = ply:GetNWInt("cells")
     net.Start("currentCells")
-        net.WriteInt(cells)
+        net.WriteInt(cells, 32)
     net.Send(ply)
 end
 

@@ -15,8 +15,6 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         ply:setDarkRPVar("hasMission", false)
     end)
 
-    -- sv_cells.lua
-    DarkRP.registerDarkRPVar("cells", net.WriteDouble, net.ReadDouble)
 
 
     sf = sf or {}
@@ -70,8 +68,8 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         end
     end
 
-    
     sf.Load()
 
 
 end)
+
