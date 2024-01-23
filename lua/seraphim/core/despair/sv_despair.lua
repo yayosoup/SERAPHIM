@@ -6,7 +6,7 @@ local function IncrementDespair()
         if currentDespair < MAX_DESPAIR then
             ply:setDarkRPVar("despair", currentDespair + 1)
             net.Start("UpdateDespair")
-            net.WriteInt(currentDespair + 10, 32)
+                net.WriteInt(currentDespair + 10, 32)
             net.Send(ply)
         end
     end

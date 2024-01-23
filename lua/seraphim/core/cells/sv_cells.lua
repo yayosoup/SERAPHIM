@@ -13,6 +13,9 @@ function _P:CellsLoad()
     else
         self:SetNWInt("cells", self:GetPData("cells"))
     end
+    net.Start("updateCells")
+        net.WriteInt(self:GetNWInt("cells"), 32)
+    net.Send(self)
 end
 
 function _P:AddCells(n)
