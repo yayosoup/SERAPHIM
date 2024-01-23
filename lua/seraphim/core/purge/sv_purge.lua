@@ -9,10 +9,16 @@ util.AddNetworkString("startClientPurge")
 util.AddNetworkString("startClientTiedPurge")
 util.AddNetworkString("endClientPurge")
 util.AddNetworkString("sendPurgeCheer")
+util.AddNetworkString("PurgeStateChanged")
+
 
 
 local function end_purge()
     net.Start("endClientPurge")
+    net.Broadcast()
+
+    net.Start("PurgeStateChanged")
+        net.WriteBool(false)  -- Replace this with your actual purge state
     net.Broadcast()
 
     local highestKill = 0
@@ -56,6 +62,10 @@ end
 
 function start_purge()
     net.Start("startClientPurge")
+    net.Broadcast()
+
+    net.Start("PurgeStateChanged")
+        net.WriteBool(true)  -- Replace this with your actual purge state
     net.Broadcast()
 
     print("Starting the purge!!!")

@@ -44,7 +44,7 @@ timer.Create("CheckMissionStatus", 50, 0, function()
 end)
 
 hook.Add("PlayerDeath", "CheckMassacre", function(victim, inflictor, attacker)
-    if attacker != victim and attacker:getDarkRPVar("currentMission") == "Massacre" then
+    if IsValid(attacker) and attacker:IsPlayer() and attacker != victim and attacker:getDarkRPVar("currentMission") == "Massacre" then
         local checkKills = attacker:GetNWInt("killCount") or 0
         checkKills = checkKills + 1
         print(checkKills)

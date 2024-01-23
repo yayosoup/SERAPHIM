@@ -3,7 +3,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 util.AddNetworkString("zomboStart")
-util.AddNetworkString("CurrentCells")
+util.AddNetworkString("currentCells")
 
 
 function ENT:Initialize()
@@ -22,14 +22,11 @@ function ENT:Use(ply)
     net.Start("zomboStart")
     net.Send(ply)
 
-    net.Start("currentCells")
-        net.Send(ply)
-    net.Send(ply)
 
 
-    local cells = ply:GetPData("CurrentCells", "")
+    local cells = ply:GetPData("cells", 1)
     net.Start("currentCells")
-        net.WriteString(cells)
+        net.WriteInt(cells)
     net.Send(ply)
 end
 

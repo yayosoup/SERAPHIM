@@ -12,7 +12,11 @@ end
 function meta:parasocial()
     print("feeling parasocial right now...")
 
-    hook.Add("PlayerDeath", "RemoveParasocial", self:remove_parasocial())
+    hook.Add("PlayerDeath", "RemoveParasocial", function(vic, inf, atk)
+        if victim == self then
+            self:remove_parasocial()
+        end
+    end)
 end
 ------------------------------------------------------------ ☆*: .｡. o(≧▽≦)o .｡.:*☆
 -- Antisocial Functions🎀
@@ -21,7 +25,11 @@ function meta:remove_antisocial()
 end
 function meta:antisocial()
     print("feeling antisocial right now...")
-    hook.Add("PlayerDeath", "RemoveAntisocial", self:remove_antisocial())
+    hook.Add("PlayerDeath", "RemoveAntisocial", function(vic, inf, atk)
+        if victim == self then
+            self:remove_antisocial()
+        end
+    end)
 end
 ------------------------------------------------------------ (❁´◡`❁)
 ------------------------------------------------------------ ☆*: .｡. o(≧▽≦)o .｡.:*☆
@@ -31,7 +39,11 @@ function meta:remove_wrath()
 end
 function meta:wrath()
     print("feeling antisocial right now...")
-    hook.Add("PlayerDeath", "RemoveWrath", self:remove_wrath())
+    hook.Add("PlayerDeath", "RemoveWrath", function(vic, inf, atk)
+        if victim == self then
+            self:remove_wrath()
+        end
+    end)
 end
 ------------------------------------------------------------ (❁´◡`❁)
 
