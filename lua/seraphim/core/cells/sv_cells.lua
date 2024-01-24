@@ -24,6 +24,13 @@ end
 function _P:AddCells(n)
     self:SetNWInt("cells", self:GetPData("cells") + n)
     self:CellsSave()
+    net.Start("updateCells")
+        net.WriteInt(self:GetNWInt("cells"), 32)
+    net.Send(self)
+end
+function _P:RemoveCells(n)
+    self:SetNWInt("cells", self:GetPData("cells") - n)
+    self:CellsSave()
 end
 
 hook.Add("PlayerInitialSpawn", "CellsLoad", function(ply)
