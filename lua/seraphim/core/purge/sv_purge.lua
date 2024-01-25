@@ -10,6 +10,7 @@ util.AddNetworkString("startClientTiedPurge")
 util.AddNetworkString("endClientPurge")
 util.AddNetworkString("sendPurgeCheer")
 util.AddNetworkString("PurgeStateChanged")
+util.AddNetworkString("PurgeStarting")
 
 
 
@@ -61,11 +62,12 @@ local function end_purge()
 end
 
 function start_purge()
+    print("start_purge() called")
     net.Start("startClientPurge")
     net.Broadcast()
 
     net.Start("PurgeStateChanged")
-        net.WriteBool(true)  -- Replace this with your actual purge state
+        net.WriteBool(true)
     net.Broadcast()
 
     print("Starting the purge!!!")
@@ -76,6 +78,7 @@ function start_purge()
     end
 
     timer.Stop("PurgeStarter")
+
 
     timer.Create("PurgeTimer", 10, 1, function()
 

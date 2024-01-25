@@ -47,18 +47,20 @@ net.Receive("startClientPurge", function ()
     chat.AddText(color_white, "A ", Color(255, 0 , 0), "PURGE", color_white, " has begun! All ", Color(255, 0 , 0), "CRIME", color_white, "is now legal!")
 
     local x = 2
-    local alpha = 0
+    local alphaEvent = 0
+    local alphaActive = 0
     hook.Add("HUDPaint", "PurgeTimer", function()
-        draw.SimpleText("ACTIVE", "FINALS", ScrW() / 2, ScrH() / 7, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        draw.SimpleText("PURGE", "finalsSubtitle", ScrW() / 2, ScrH() / x, Color(210, 31, 60, alpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("ACTIVE", "FINALS", ScrW() / 2, ScrH() / 7, Color(255, 255, 255, alphaActive), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("PURGE", "finalsSubtitle", ScrW() / 2, ScrH() / x, Color(210, 31, 60, alphaEvent), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-        if alpha < 255 then
-            alpha = alpha + 0.25
+        if alphaEvent < 255 then
+            alphaEvent = alphaEvent + 0.25
         end
-        if alpha == 255 then
-            if x < 5.5 then
-                x = x + 2 * FrameTime()
-            end
+        if alphaEvent == 255 and x < 5.5 then
+            x = x + 2 * FrameTime()
+        end
+        if x >= 5.5 then
+            alphaActive = alphaActive + 0.5
         end
     end)
 
