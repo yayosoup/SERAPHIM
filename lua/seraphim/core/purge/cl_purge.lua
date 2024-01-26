@@ -100,3 +100,4 @@ end)
 net.Receive("sendPurgeCheer", function()
     surface.PlaySound("kidneydagger/radio.wav")
 end)
+
