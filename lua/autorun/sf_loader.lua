@@ -50,6 +50,9 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         -- dopamine farmers, kill sound effects, etc.
         { name = "sv_dopamine", modulePath = "dopamine/", type = "SERVER" },
         { name = "cl_dopamine", modulePath = "dopamine/", type = "CLIENT" },
+        -- on switch, tips for when players swap
+        { name = "sv_onswitch", modulePath = "onSwitch/", type = "SERVER" },
+        { name = "cl_onswitch", modulePath = "onSwitch/", type = "CLIENT" },
     }
 
     function sf.Load()

@@ -101,3 +101,27 @@ net.Receive("sendPurgeCheer", function()
     surface.PlaySound("kidneydagger/radio.wav")
 end)
 
+local dist = 4000^2
+hook.Add("HUDPaint", "BloodESP", function()
+    if LocalPlayer():Team() != TEAM_BLOOD then return end
+
+    local bloodPlayers = {}
+
+    for _, ply in ipairs(player.GetAll()) do
+        if ply:Team() == TEAM_BLOOD then
+            table.insert(bloodPlayers, ply)
+        end
+    end
+
+
+    for k,v in ipairs(bloodPlayers) do
+        local pos = v:GetPos()
+        if LocalPlayer():GetPos():DistToSqr(pos) < dist then
+            pos = pos:ToScreen()
+            surface.SetDrawColor(0, 0, 0, 200)
+            surface.DrawRect(pos.x - 32, pos.y, -32,64,64)
+            draw.SimpleText(v:Name(), Default, pos.x, pos.y, Color(255,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Bloods Teammate:", Default, pos.x, pos.y - 10, Color(255,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        end
+    end
+end)

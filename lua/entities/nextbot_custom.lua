@@ -1,62 +1,72 @@
+
 AddCSLuaFile()
 
 ENT.Base = "base_nextbot"
 ENT.Spawnable = true
 
-
-
 function ENT:Initialize()
-    self:SetModel("models/seagull.mdl")
 
-    self.StartleDist = 500
-    self.WanderDist = 200
+	--self:SetModel( "models/props_halloween/ghost_no_hat.mdl" )
+	--self:SetModel( "models/props_wasteland/controlroom_filecabinet002a.mdl" )
+	self:SetModel( "models/mossman.mdl" )
 
-    PrintTable( self:GetSequenceList())
 end
-
-function ENT:PlayerNear()
-    for i,v in pairs (ents.FindInSphere(self:GetPos(), self.StartleDist)) do
-        if v:IsPlayer() && v:IsLineOfSightClear(self:GetPos()) then
-            return true
-        end
-    end
-   return false
-end
-
 
 function ENT:RunBehaviour()
-    while (true) do
-        if self:PlayerNear() then
-            self.loco:SetDesiredSpeed(300)
-            self:EmitSound( "ambient/alarms/klaxon1.wav")
-            self:PlaySequenceAndWait("Hop")
-            self:StartActivity( ACT_RUN )
-            self:MoveToPos( self:GetPos() + Vector(math.Rand(-1, 1), math.Rand(-1, 1), 0 ) * 1000 )
-            self:PlaySequenceAndWait("Land")
-            self:StartActivity(ACT_IDLE)
-        else
-            self:StartActivity(ACT_WALK)
-            self.loco:SetDesiredSpeed(300)
 
-            self:MoveToPos( self:GetPos() + Vector(math.Rand(-1, 1), math.Rand(-1, 1), 0 ) * self.WanderDist )
-            self:StartActivity(ACT_IDLE)
-        end
-        coroutine.wait(1)
-    end
+	while ( true ) do
+
+		self:StartActivity( ACT_WALK ) -- walk anims
+		self.loco:SetDesiredSpeed( 100 ) -- walk speeds
+
+		-- Choose a random location within 400 units of our position
+		local targetPos = self:GetPos() + Vector( math.Rand( -1, 1 ), math.Rand( -1, 1 ), 0 ) * 400
+
+		-- Search for walkable space there, or nearby
+		local area = navmesh.GetNearestNavArea( targetPos )
+
+		-- We found walkable space, get the closest point on that area to where we want to be
+		if ( IsValid( area ) ) then targetPos = area:GetClosestPointOnArea( targetPos ) end
+
+		-- walk to the target place (yielding)
+		self:MoveToPos( targetPos )
+
+		self:StartActivity( ACT_IDLE ) -- revert to idle activity
+
+		self:PlaySequenceAndWait( "idle_to_sit_ground" ) -- Sit on the floor
+		--self:SetSequence( "sit_ground" ) -- Stay sitting
+		coroutine.wait( self:PlayScene( "scenes/eli_lab/mo_gowithalyx01.vcd" ) ) -- play a scene and wait for it to finish before progressing
+		self:PlaySequenceAndWait( "sit_ground_to_idle" ) -- Get up
+
+		-- find the furthest away hiding spot
+		local pos = self:FindSpot( "random", { type = "hiding", radius = 5000 } )
+
+		-- if the position is valid
+		if ( pos ) then
+			self:StartActivity( ACT_RUN ) -- run anim
+			self.loco:SetDesiredSpeed( 200 ) -- run speed
+			self:PlayScene( "scenes/npc/female01/watchout.vcd" ) -- shout something while we run just for a laugh
+			self:MoveToPos( pos ) -- move to position (yielding)
+			self:PlaySequenceAndWait( "fear_reaction" ) -- play a fear animation
+			self:StartActivity( ACT_IDLE ) -- when we finished, go into the idle anim
+		else
+
+			-- some activity to signify that we didn't find shit
+
+		end
+
+		coroutine.yield()
+
+	end
+
+
 end
 
-list.Set("NPC", "nextbot_custom", {
-    Name = "nextbot base",
-    Class = "nextbot_custom",
-    Category = "yayo",
-})
-
-
---[[
-ENT.PrintName = "next_base_entity"
-ENT.Author = "yayo"
-ENT.Contact = "yayosoup@gmail.com"
-ENT.Purpose = "base npc entity"
-ENT.Instructions = "base npc entity"
-ENT.Category = "yayoitems"
---]]
+--
+-- List the NPC as spawnable
+--
+list.Set( "NPC", "nextbot_custom", {
+	Name = "hello NPC",
+	Class = "nextbot_custom",
+	Category = "yayo"
+} )

@@ -99,7 +99,7 @@ function start_purge()
 
 end
 
-local TIME_BETWEEN_PURGE = 600
+local TIME_BETWEEN_PURGE = 500
 
 timer.Create("PurgeStarter", TIME_BETWEEN_PURGE, 0, function()
 
@@ -118,3 +118,10 @@ for k,v in pairs(player.GetAll()) do
         print("Hitman not found")
     end
 end
+
+hook.Add( "PlayerShouldTakeDamage", "AntiTeamkill", function( ply, attacker )
+    if ply:Team() == TEAM_BLOOD and attacker:Team() == TEAM_BLOOD then
+        print (ply:Nick() .. " tried to kill " .. attacker:Nick())
+        return false
+    end
+end )
