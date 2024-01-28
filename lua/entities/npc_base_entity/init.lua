@@ -7,9 +7,10 @@ function ENT:Initialize()
     self:SetHullType( HULL_HUMAN )
     self:SetUseType( SIMPLE_USE )
     self:SetHullSizeNormal()
-    self:SetNPCState(NPC_STATE_SCRIPT)
+    self:SetNPCState(NPC_STATE_IDLE)
     self:SetSolid( SOLID_BBOX)
     self:SetCollisionGroup( COLLISION_GROUP_NONE )
+
 
     local phys = self:GetPhysicsObject()
     if phys:IsValid() then phys:Wake() end

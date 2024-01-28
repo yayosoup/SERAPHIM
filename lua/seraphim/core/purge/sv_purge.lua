@@ -99,7 +99,7 @@ function start_purge()
 
 end
 
-local TIME_BETWEEN_PURGE = 5
+local TIME_BETWEEN_PURGE = 500
 
 timer.Create("PurgeStarter", TIME_BETWEEN_PURGE, 0, function()
 
