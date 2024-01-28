@@ -120,7 +120,7 @@ function ENT:Draw()
         end
 
         if imgui.Entity3D2D(self, POSITION, ANGLE_2, SCALE_2, WIDTH, HEIGHT) then
-                draw.SimpleText("PURGE", "AWESOME", -45, -150, WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("COOL", "AWESOME", -45, -150, WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             imgui.End3D2D()
         end
 

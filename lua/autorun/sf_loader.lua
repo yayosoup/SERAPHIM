@@ -1,5 +1,7 @@
-
+AddCSLuaFile("imgui.lua")
 hook.Add("DarkRPFinishedLoading", "sfloader", function()
+    AddCSLuaFile("imgui.lua")
+    imgui = include("imgui.lua")
     print("sf_loader has intialized!")
 
     -- REGISTER NEEDED VARIABLES DarkRP

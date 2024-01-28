@@ -99,7 +99,7 @@ function start_purge()
 
 end
 
-local TIME_BETWEEN_PURGE = 500
+local TIME_BETWEEN_PURGE = 5
 
 timer.Create("PurgeStarter", TIME_BETWEEN_PURGE, 0, function()
 
@@ -111,6 +111,7 @@ function getPurgeStatus()
     return purge_status
 end
 
+/*
 for k,v in pairs(player.GetAll()) do
     if v:Team() == TEAM_HITMAN then
        print("Hitman found" .. v:Nick())
@@ -125,3 +126,4 @@ hook.Add( "PlayerShouldTakeDamage", "AntiTeamkill", function( ply, attacker )
         return false
     end
 end )
+*/

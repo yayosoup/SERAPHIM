@@ -9,21 +9,3 @@ hook.Add("OnNPCKilled", "DropArmorOnZombieDeath", function(npc, attacker, inflic
         end
     end
 end)
-
--- Function to remove an entity after a delay
-local function removeEntityDelayed(entity, delay)
-    timer.Simple(delay, function()
-        if IsValid(entity) then
-            entity:Remove()
-        end
-    end)
-end
-
--- Hook into NPC death
-hook.Add("OnNPCKilled", "RemoveDeadNPC", function(npc, attacker, inflictor)
-    -- Check if the killed entity is an NPC
-    if IsValid(npc) and npc:IsNPC() then
-        local delayToRemove = 10 -- Adjust the delay as needed (in seconds)
-        removeEntityDelayed(npc, delayToRemove)
-    end
-end)
