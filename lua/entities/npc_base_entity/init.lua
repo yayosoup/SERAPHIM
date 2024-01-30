@@ -27,5 +27,5 @@ function ENT:Initialize()
 end
 
 function ENT:AcceptInput( name, activator, caller )
-    print('hello')
+    print("hello")
 end

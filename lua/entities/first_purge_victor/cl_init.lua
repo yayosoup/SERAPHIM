@@ -6,17 +6,6 @@ surface.CreateFont( "SeraphimFinals", {
         extended = false,
         size = 70,
         weight = 500,
-        blursize = 0,
-        scanlines = 0,
-        antialias = true,
-        underline = false,
-        italic = false,
-        strikeout = false,
-        symbol = false,
-        rotary = false,
-        shadow = false,
-        additive = false,
-        outline = false,
 } )
 
 local NPC_COLOR = Color(255,215,0)
@@ -24,31 +13,32 @@ local NPC_TITLE = "First Place"
 local INNER_COLOR = Color( 22, 22, 22, 255 )
 local v = Vector()
 
+
 function ENT:Initialize()
     test = {
-        "models/Humans/Group03m/Male_03.mdl",
         "models/Humans/Group03m/Male_04.mdl",
+        "models/player/Group01/female_01.mdl",
+        "models/player/alyx.mdl",
+        "models/player/charple.mdl",
+        "models/player/breen.mdl",
+        "models/player/dod_german.mdl",
+        "models/player/Group01/male_01.mdl",
     }
     test2 = {
-        468,
-        500,
-        501,
+        "idle_all_01"
     }
-    self.csModel = ClientsideModel(test[1])
-    PrintTable(self:GetSequenceList())
-    self.csModel:SetModelScale(1, 0)
-    self.csModel:SetSequence(1388)
+    local choose = table.Random(test)
+    self.csModel = ClientsideModel("models/Humans/Group03m/Male_04.mdl")
+    PrintTable(self.csModel:GetSequenceList())
+    local seq = self.csModel:LookupSequence("Heal")
+    if seq > 0 then
+        print("hello")
+        self.csModel:SetSequence(seq)
+    else
+        print("haii")
+        self.csModel:SetSequence(5)
+    end
 
-    timer.Create("Timer", 5, 0, function()
-        local chooseModel = table.Random(test)
-        self.csModel:SetModel(chooseModel)
-        self.csModel:SetModelScale(1, 0)
-        self.csModel:SetupBones()
-        local chooseSequence = table.Random(test2)
-        self.csModel:SetSequence(chooseSequence)
-
-
-    end)
 end
 
 
@@ -57,8 +47,11 @@ function ENT:Draw()
         return
     end
 
-    self.csModel:SetPos(self:GetPos())
-    self.csModel:SetAngles(self:GetAngles())
+
+        self.csModel:SetPos(self:GetPos())
+        self.csModel:SetAngles(self:GetAngles())
+        self.csModel:DrawModel()
+
 
 
 
@@ -85,3 +78,16 @@ end
 function ENT:OnRemove()
     self.csModel:Remove()
 end
+
+/*
+        timer.Create("Timer", 5, 0, function()
+        local chooseModel = table.Random(test)
+        self.csModel:SetModel(chooseModel)
+        self.csModel:SetModelScale(1, 0)
+        self.csModel:SetupBones()
+        local chooseSequence = table.Random(test2)
+        self.csModel:SetSequence(chooseSequence)
+
+
+    end)
+*/
