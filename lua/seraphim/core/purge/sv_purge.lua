@@ -12,6 +12,9 @@ util.AddNetworkString("sendPurgeCheer")
 util.AddNetworkString("PurgeStateChanged")
 util.AddNetworkString("PurgeStarting")
 util.AddNetworkString("tellPurgeModel")
+util.AddNetworkString("tellPurgeVictorModel")
+util.AddNetworkString("SendPurgeTime")
+
 
 
 local function check_victors()
@@ -37,6 +40,7 @@ local function end_purge()
         if checkKill > highestKill then
             highestKill = checkKill
             highestKillPlayer = v
+            isTied = false  -- Reset isTied if a new highest kill is found
         elseif checkKill == highestKill then
             isTied = true
             tiedPlayer = v
@@ -46,7 +50,7 @@ local function end_purge()
     if highestKill == 0 then
         net.Start("noPurgeVictor")
         net.Broadcast()
-    elseif isTied then
+    elseif isTied == true then
         sendVictor = highestKillPlayer:Nick()
         sendTied = tiedPlayer:Nick()
         net.Start("startClientTiedPurge")
@@ -55,21 +59,23 @@ local function end_purge()
             net.WriteInt(highestKill, 4)
         net.Broadcast()
     else
+        print("The victor is " .. highestKillPlayer:Nick() .. " with " .. highestKill .. " kills")
         sendVictor = highestKillPlayer:Nick()
-        victorModel = highestKillPlayer:GetModel()
+        firstVictorModel = highestKillPlayer:GetModel()
         net.Start("tellPurgeVictor")
             net.WriteString(sendVictor)
             net.WriteInt(highestKill, 4)
         net.Broadcast()
+        net.Start("tellPurgeVictorModel")
+            net.WriteString(sendVictor)
+            net.WriteInt(highestKill, 4)
+        net.Broadcast()
         net.Start("tellPurgeModel")
-            net.WriteString(victorModel)
+            net.WriteString(firstVictorModel)
         net.Broadcast()
     end
-
-
     purge_status = 0
 end
-
 
 function start_purge()
     purge_status = 1
@@ -92,7 +98,7 @@ function start_purge()
     local PURGE_INIT = 10
     timer.Create("PurgeTimer", PURGE_INIT, 1, function()
 
-        timer.Simple(PURGE_DURATION, function()
+        timer.Create("purgeDURATION", PURGE_DURATION, 1, function()
             end_purge()
             print("Ending the purge now!!!")
             timer.Start("PurgeStarter")
@@ -111,7 +117,7 @@ hook.Add("PlayerDeath", "killTracker", function(victim, inflictor, attacker)
     end
 end)
 
-local TIME_BETWEEN_PURGE = 30
+local TIME_BETWEEN_PURGE = 5
 
 timer.Create("PurgeStarter", TIME_BETWEEN_PURGE, 0, function()
 
@@ -159,3 +165,13 @@ hook.Add("PlayerDeath", "DeadGoBoom", function(vic, inf, atk)
     vic:EmitSound("ambient/explosions/explode_" .. math.random(1, 9) .. ".wav", 75, 75, CHAN_VOICE)
     explode(inf, atk, vicPos)
 end)
+
+timer.Create("SendPurgeTime", 1, 0, function()
+    local timeLeft = timer.TimeLeft("purgeDURATION")
+    if timeLeft then
+        net.Start("SendPurgeTime")
+            net.WriteFloat(timeLeft)
+        net.Broadcast()
+    end
+end)
+

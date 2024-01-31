@@ -125,3 +125,21 @@ hook.Add("HUDPaint", "BloodESP", function()
         end
     end
 end)
+
+local purgeStarterTime = 0
+local drawPurgeStarter = false
+
+net.Receive("SendPurgeTime", function()
+    purgeStarterTime = net.ReadFloat()
+    drawPurgeStarter = true
+
+    timer.Simple(purgeStarterTime, function()
+        drawPurgeStarter = false
+    end)
+end)
+
+hook.Add("HUDPaint", "DrawPurgeStarter", function()
+    if drawPurgeStarter then
+        draw.SimpleText("Purge: " .. math.ceil(purgeStarterTime), "Default", ScrW() * 0.5, ScrH() / 1.1, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    end
+end)

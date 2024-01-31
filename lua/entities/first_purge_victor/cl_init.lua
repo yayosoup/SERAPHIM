@@ -7,37 +7,36 @@ surface.CreateFont( "SeraphimFinals", {
         size = 70,
         weight = 500,
 } )
+net.Receive("tellPurgeModel", function()
+    model = net.ReadString()
 
+    if firstPlace then
+        firstPlace.csModel = ClientsideModel(model)
+        local seq = firstPlace.csModel:LookupSequence("Heal")
+        if seq > 0 then
+            print("hello")
+            firstPlace.csModel:SetSequence(seq)
+        else
+            print("haii")
+            firstPlace.csModel:SetSequence(5)
+        end
+
+    end
+end)
+
+net.Receive("tellPurgeVictorModel", function()
+    victor = net.ReadString()
+    NPC_TITLE = victor
+    print(victor)
+end)
 local NPC_COLOR = Color(255,215,0)
-local NPC_TITLE = "First Place"
 local INNER_COLOR = Color( 22, 22, 22, 255 )
 local v = Vector()
 
 
+
 function ENT:Initialize()
-    test = {
-        "models/Humans/Group03m/Male_04.mdl",
-        "models/player/Group01/female_01.mdl",
-        "models/player/alyx.mdl",
-        "models/player/charple.mdl",
-        "models/player/breen.mdl",
-        "models/player/dod_german.mdl",
-        "models/player/Group01/male_01.mdl",
-    }
-    test2 = {
-        "idle_all_01"
-    }
-    local choose = table.Random(test)
-    self.csModel = ClientsideModel("models/Humans/Group03m/Male_04.mdl")
-    PrintTable(self.csModel:GetSequenceList())
-    local seq = self.csModel:LookupSequence("Heal")
-    if seq > 0 then
-        print("hello")
-        self.csModel:SetSequence(seq)
-    else
-        print("haii")
-        self.csModel:SetSequence(5)
-    end
+    firstPlace = self
 
 end
 
@@ -91,3 +90,4 @@ end
 
     end)
 */
+

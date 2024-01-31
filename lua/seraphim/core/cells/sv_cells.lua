@@ -3,7 +3,6 @@ local _P = FindMetaTable("Player")
 util.AddNetworkString("updateCells")
 
 function _P:CellsSave()
-    print("Saving cells for " .. self:Nick() .. self:GetNWInt("cells"))
     self:SetPData("cells", self:GetNWInt("cells"))
 end
 
@@ -43,7 +42,6 @@ end)
 
 timer.Create("CellsCheck", 5, 0, function()
     for k , v in pairs(player.GetAll()) do
-        print("Adding cells to " .. v:Nick())
         v:AddCells(1)
         net.Start("updateCells")
             net.WriteInt(v:GetNWInt("cells"), 32)
