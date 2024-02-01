@@ -7,6 +7,8 @@ surface.CreateFont( "SeraphimFinals", {
         size = 70,
         weight = 500,
 } )
+
+
 net.Receive("tellPurgeModel", function()
     model = net.ReadString()
 
@@ -46,11 +48,11 @@ function ENT:Draw()
         return
     end
 
-
+    if firstPlace then
         self.csModel:SetPos(self:GetPos())
         self.csModel:SetAngles(self:GetAngles())
         self.csModel:DrawModel()
-
+    end
 
 
 

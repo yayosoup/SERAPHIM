@@ -15,6 +15,23 @@ surface.CreateFont( "FINALS", {
         additive = false,
         outline = false,
 } )
+surface.CreateFont( "FINALSTIMER", {
+        font = "FinalsNotoSans", --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
+        extended = false,
+        size = 25,
+        weight = 500,
+        blursize = 0,
+        scanlines = 0,
+        antialias = true,
+        underline = false,
+        italic = false,
+        strikeout = false,
+        symbol = false,
+        rotary = false,
+        shadow = false,
+        additive = false,
+        outline = false,
+} )
 surface.CreateFont( "finalsSubtitle", {
         font = "FinalsNotoSans", --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
         extended = false,
@@ -138,8 +155,18 @@ net.Receive("SendPurgeTime", function()
     end)
 end)
 
+local function SecondsToMinutesAndSeconds(totalSeconds)
+    local minutes = math.floor(totalSeconds / 60)
+    local seconds = totalSeconds % 60
+    return minutes, seconds
+end
+
 hook.Add("HUDPaint", "DrawPurgeStarter", function()
     if drawPurgeStarter then
-        draw.SimpleText("Purge: " .. math.ceil(purgeStarterTime), "Default", ScrW() * 0.5, ScrH() / 1.1, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        local minutes, seconds = SecondsToMinutesAndSeconds(purgeStarterTime)
+        draw.RoundedBox(0, ScrW() / 2 - 20, ScrH() / 15 - 16, 50, 39, Color(50, 50, 50, 50))
+        draw.SimpleText(string.format("%02d:%02d", minutes, seconds), "FINALSTIMER", ScrW() / 1.99, ScrH() / 15, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        surface.SetDrawColor(color_white)
+        surface.DrawLine(ScrW() / 2 - 20, ScrH() / 15 - 16, ScrW() / 2 + 30, ScrH() / 15 - 16)
     end
 end)

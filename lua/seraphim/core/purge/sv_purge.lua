@@ -94,7 +94,7 @@ function start_purge()
 
     timer.Stop("PurgeStarter")
 
-    local PURGE_DURATION = 45
+    local PURGE_DURATION = 600
     local PURGE_INIT = 10
     timer.Create("PurgeTimer", PURGE_INIT, 1, function()
 
