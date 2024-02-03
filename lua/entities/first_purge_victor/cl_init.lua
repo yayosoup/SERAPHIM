@@ -7,7 +7,7 @@ surface.CreateFont( "SeraphimFinals", {
         size = 70,
         weight = 500,
 } )
-
+-- please help me 
 
 net.Receive("tellPurgeModel", function()
     model = net.ReadString()
