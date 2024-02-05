@@ -32,9 +32,9 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         { name = "sv_despair", modulePath = "despair/", type = "SERVER" },
         { name = "cl_despair", modulePath = "despair/", type = "CLIENT" },
         -- stabilizers mechinics to reduce despair, like drugs, alcohol, etc.
-        { name = "sh_stabilizers", modulePath = "stabilizers/", type = "SHARED" },
-        { name = "sv_stabilizers", modulePath = "stabilizers/", type = "SERVER" },
-        { name = "cl_stabilizers", modulePath = "stabilizers/", type = "CLIENT" },
+        { name = "sh_stabilizer", modulePath = "stabilizer/", type = "SHARED" },
+        { name = "sv_stabilizer", modulePath = "stabilizer/", type = "SERVER" },
+        { name = "cl_stabilizer", modulePath = "stabilizer/", type = "CLIENT" },
         -- still uses normal darkrp wanted system, but adds a few more features
         { name = "cl_wanted", modulePath = "wanted/", type = "CLIENT" },
         { name = "sv_wanted", modulePath = "wanted/", type = "SERVER" },
