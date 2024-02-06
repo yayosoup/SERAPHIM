@@ -44,8 +44,8 @@ function ENT:Draw()
             draw.SimpleText( NPC_TITLE, "SeraphimFinals", 2, -z + 10, Color(255,255,255), TEXT_ALIGN_CENTER)
             draw.RoundedBox(0, -76, -615, 155, 38, Color(0, 0, 0))
             draw.SimpleText( states[index], "SeraphimFinalsSub", 2, -z + 100, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
-
-            draw.SimpleText( "Tech Trash: " .. GetGlobalInt("tech_trash"), "SeraphimFinalsSubSub", 2, -z , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+            local tech_trash = self:Gettech_trash()
+            draw.SimpleText( "Tech Trash: " .. tech_trash, "SeraphimFinalsSubSub", 2, -z , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
         cam.End3D2D()
     end
 end

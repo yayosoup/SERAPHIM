@@ -1,7 +1,9 @@
+
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 
+-- Initialize the entity
 function ENT:Initialize()
     self:SetModel("models/props_wasteland/gaspump001a.mdl")
     self:PhysicsInit(SOLID_VPHYSICS)
@@ -16,14 +18,11 @@ function ENT:Initialize()
 end
 
 function ENT:OnTakeDamage(dmg)
-    self:SetHealth(self:Health() - dmg:GetDamage()) -- Subtract the damage taken from the entity's health
+    self:SetHealth(self:Health() - dmg:GetDamage())
 
-    if self:Health() <= 0 then -- If the entity's health is 0 or less
-        self:Remove() -- Remove the entity
+    if self:Health() <= 0 then
+        self:Remove()
     end
 end
 
-hook.Add("PlayerDeath", "Testing!!", function()
-    local count = GetGlobalInt("tech_trash")
-    SetGlobalInt("tech_trash", count + 1)
-end)
+
