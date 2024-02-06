@@ -1,7 +1,7 @@
 local CURRENT_COUNT = GetGlobalInt("current_count", 1)
 local stock = {}
 
-timer.Create("should_manufacture", 45, 0, function()
+timer.Create("should_manufacture", 999, 0, function()
     print("should manufacture?")
     if CURRENT_COUNT == 0 then return end
 
