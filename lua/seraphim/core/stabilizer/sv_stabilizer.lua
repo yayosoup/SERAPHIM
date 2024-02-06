@@ -50,6 +50,7 @@ timer.Create("YesYesYes", 999, 0, function()
     end
 
     local foundKey
+
     for k, v in pairs(CustomShipments) do
         foundKey = math.random(table.Count(CustomShipments))
     end

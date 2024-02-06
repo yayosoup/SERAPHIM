@@ -42,10 +42,17 @@ function ENT:Draw()
         cam.Start3D2D(textpos, ang, 0.1)
             draw.RoundedBox(0, v.x - innerWidth / 2, -z + (outlineHeight - innerHeight) / 2, innerWidth, innerHeight, Color(210, 31, 60))
             draw.SimpleText( NPC_TITLE, "SeraphimFinals", 2, -z + 10, Color(255,255,255), TEXT_ALIGN_CENTER)
-            draw.RoundedBox(0, -76, -615, 155, 38, Color(0, 0, 0))
-            draw.SimpleText( states[index], "SeraphimFinalsSub", 2, -z + 100, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
             local tech_trash = self:Gettech_trash()
             draw.SimpleText( "Tech Trash: " .. tech_trash, "SeraphimFinalsSubSub", 2, -z , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+
+            if self:GetisRunning() == true then
+                draw.RoundedBox(0, -76, -615, 155, 38, Color(0, 0, 0))
+                draw.SimpleText( states[index], "SeraphimFinalsSub", 2, -z + 100, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+            else
+                draw.RoundedBox(0, -76, -615, 155, 38, Color(0, 0, 0))
+                draw.SimpleText( "Not Running", "SeraphimFinalsSub", 2, -z + 100, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+            end
+
         cam.End3D2D()
     end
 end

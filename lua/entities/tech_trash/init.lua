@@ -14,9 +14,16 @@ function ENT:Initialize()
 end
 
 function ENT:StartTouch(ent)
-    print(ent:GetClass() .. "touching")
+
     if ent:IsPlayer() then return end
     if ent:GetClass() != "stabilizer" then return end
+
+    local owner = self:GetOwner()
+    print(owner)
+    if owner:IsValid() then
+        owner:ChatPrint("You inserted tech trash into a stabilizer!")
+    end
+
     local count = ent:Gettech_trash()
     print(count)
     ent:Settech_trash(count + 1)
