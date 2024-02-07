@@ -1,6 +1,6 @@
 include("shared.lua")
 
-local mayorPanel = nil  -- store the panel in a global variable
+local mayorPanel = nil
 
 function ENT:Draw()
     self:DrawModel()

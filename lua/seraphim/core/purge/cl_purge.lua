@@ -116,6 +116,7 @@ end)
 
 net.Receive("sendPurgeCheer", function()
     surface.PlaySound("kidneydagger/radio.wav")
+    LocalPlayer():EmitSound("atomicpurge/purge_start.mp3")
 end)
 
 local dist = 4000^2
@@ -169,4 +170,9 @@ hook.Add("HUDPaint", "DrawPurgeStarter", function()
         surface.SetDrawColor(color_white)
         surface.DrawLine(ScrW() / 2 - 20, ScrH() / 15 - 16, ScrW() / 2 + 30, ScrH() / 15 - 16)
     end
+end)
+
+hook.Add("PlayerDeath", "helooooohaii", function(ply)
+    print("Player spawned")
+    ply:EmitSound("bioter/chatter3.ogg")
 end)
