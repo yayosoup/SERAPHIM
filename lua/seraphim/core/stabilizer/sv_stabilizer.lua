@@ -1,5 +1,5 @@
 local CURRENT_COUNT = GetGlobalInt("current_count", 1)
-local stock = {}
+cityStock = {}
 
 timer.Create("should_manufacture", 999, 0, function()
     print("should manufacture?")
@@ -14,17 +14,22 @@ timer.Create("should_manufacture", 999, 0, function()
     end
 end)
 
-hook.Add("PlayerSpawn", "testinglol", function(ply)
-    local foundKey
-    for k, v in pairs(CustomShipments) do
-        foundKey = math.random(table.Count(CustomShipments))
+timer.Create("start_manufacturing", 45, 0, function()
+    local players = player.GetAll()
+    local ply
+
+    if #players > 0 then
+        ply = players[math.random(#players)]
     end
+
+    local foundKey = table.Random(cityStock)
+    print(foundKey)
 
     local shipment = ents.Create("spawned_shipment")
     shipment.SID = ply.SID
     shipment:Setowning_ent(ply)
     shipment:SetContents(foundKey, 10)
-    shipment:SetPos(Vector(330.917480, -913.302856, -139.968750))
+    shipment:SetPos(Vector(-2813.489990, -4496.767090, -139.968750))
     shipment.nodupe = true
     shipment:Spawn()
     shipment:SetPlayer(ply)
@@ -40,6 +45,15 @@ hook.Add("PlayerSpawn", "testinglol", function(ply)
 
     hook.Call("playerBoughtShipment", nil, ply, CustomShipments[foundKey], weapon)
 end)
+
+/*
+hook.Add("PlayerSpawn", "testinglol", function(ply)
+    local foundKey
+    for k, v in pairs(CustomShipments) do
+        foundKey = math.random(table.Count(CustomShipments))
+    end
+
+
 
 timer.Create("YesYesYes", 999, 0, function()
     local players = player.GetAll()
@@ -80,3 +94,7 @@ local shipmentIDs = table.GetKeys(CustomShipments)
 for _, id in ipairs(shipmentIDs) do
     print("Shipment ID: " .. id)
 end
+
+
+
+*/

@@ -12,6 +12,7 @@ function ENT:Initialize()
     self:SetSolid(SOLID_VPHYSICS)
     self:SetHealth(100) -- Set initial health to 100
     self:SetisRunning(false)
+    self:Manufacture()
 
     local phys = self:GetPhysicsObject()
     if phys:IsValid() then
@@ -35,4 +36,20 @@ function ENT:Use(Act)
         self:EmitSound("ambient/machines/machine3.wav")
         self:SetisRunning(true)
     end
+end
+
+function ENT:Manufacture()
+    timer.Create("StableManufact", 2, 0, function()
+        print("StableManufact running")
+        if self:GetisRunning() == false then return end
+        if self:Gettech_trash() == 0 then return end
+        print(self:GetClass() .. " has passed checks!")
+
+        self:Settech_trash(self:Gettech_trash() - 1)
+        local chosenShipment = table.Random(CustomShipments)
+
+        table.insert(cityStock, chosenShipment)
+        PrintTable(cityStock)
+    end)
+
 end

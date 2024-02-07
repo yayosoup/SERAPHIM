@@ -68,6 +68,7 @@ function ENT:Draw()
 
         ang:RotateAroundAxis(self:GetAngles():Right(), 90)
         ang:RotateAroundAxis(self:GetAngles():Forward(), 90)
+
         cam.Start3D2D(self:GetPos() + ang:Up(), Angle(0, LocalPlayer():EyeAngles().y - 90, 90), 0.1)
             draw.RoundedBox(0, v.x - outlineWidth / 2, (v.z / 2) - z, outlineWidth, outlineHeight, NPC_COLOR)
             draw.RoundedBox(0, v.x - innerWidth / 2, (v.z / 2) - z + (outlineHeight - innerHeight) / 2, innerWidth, innerHeight, INNER_COLOR)
