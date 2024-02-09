@@ -94,3 +94,7 @@ end
     end)
 */
 
+concommand.Add("gPos", function()
+    local pos = (LocalPlayer():GetPos())
+    print (pos.x .. ", " .. pos.y .. ", " .. pos.z)
+end)

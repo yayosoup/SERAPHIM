@@ -101,6 +101,11 @@ net.Receive("YAYO_STARTCALL", function()
         draw.RoundedBox(0, 0, 0, w, h, Color( 16, 148, 56 ))
         draw.RoundedBox(0, 5, 5, w-10, h-10, Color(38, 38, 47, 255))
     end
+    callButton.DoClick = function()
+        phonePanel:Close()
+        net.Start("YAYO_ANSWERCALL")
+        net.SendToServer()
+    end
 
     local noButton = vgui.Create("DButton", phonePanel)
     noButton:SetSize(rightHalf:GetWide(), rightHalf:GetTall() * 0.12)
@@ -109,6 +114,9 @@ net.Receive("YAYO_STARTCALL", function()
     noButton.Paint = function(self, w, h)
         draw.RoundedBox(0, 0, 0, w, h, Color(  113, 19, 11  ))
         draw.RoundedBox(0, 5, 5, w-10, h-10, Color(38, 38, 47, 255))
+    end
+    noButton.DoClick = function()
+        phonePanel:Close()
     end
 
 
@@ -159,13 +167,14 @@ end
 
 local function DrawWaypoint(vector, location)
     print("Drawing waypoint")
-    local dist = 200^2
+    local dist = 1500^2
     hook.Add("HUDPaint", "Waypoint", function()
         if LocalPlayer():GetPos():DistToSqr(vector) > dist then
             local screenPos = vector:ToScreen() -- Store the screen position in a separate variable
             draw.SimpleText(location, "SeraphimFinalsSub", screenPos.x, screenPos.y, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         else
             cleanupWaypoint()
+            LocalPlayer():EmitSound("music/hl2_song29.mp3")
         end
     end)
 end
