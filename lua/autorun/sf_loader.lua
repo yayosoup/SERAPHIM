@@ -48,9 +48,9 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
         -- purge system, 
         { name = "sv_purge", modulePath = "purge/", type = "SERVER" },
         { name = "sh_purge", modulePath = "purge/", type = "SHARED" },
-        { name = "cl_purge", modulePath = "purge/", type = "CLIENT" },
-        { name = "sv_cells", modulePath = "cells/", type = "SERVER" },
-        { name = "cl_cells", modulePath = "cells/", type = "CLIENT" },
+        --{ name = "cl_purge", modulePath = "purge/", type = "CLIENT" },
+        --{ name = "sv_cells", modulePath = "cells/", type = "SERVER" },
+        --{ name = "cl_cells", modulePath = "cells/", type = "CLIENT" },
         -- dopamine farmers, kill sound effects, etc.
         { name = "sv_dopamine", modulePath = "dopamine/", type = "SERVER" },
         { name = "cl_dopamine", modulePath = "dopamine/", type = "CLIENT" },
