@@ -174,4 +174,3 @@ timer.Create("SendPurgeTime", 1, 0, function()
         net.Broadcast()
     end
 end)
-

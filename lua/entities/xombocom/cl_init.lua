@@ -7,7 +7,7 @@ function ENT:Draw()
 end
 
 
-net.Receive("zomboStart", function()
+net.Receive("zomboStart", function(len, ply)
     if IsValid(zomboPanel) then return end
 
     print("xombo received on client :3")
@@ -37,7 +37,7 @@ net.Receive("zomboStart", function()
         end
     end
 
-    local cells = net.ReadInt(32)
+    local cells = ply:GetDarkRPVar("cell")
     local cellsCheck = vgui.Create("DLabel", zomboPanel)
     cellsCheck:SetPos(ScrW() * 0.006, ScrH() * 0.03)
     cellsCheck:SetText("You have " .. cells .. " cells.")

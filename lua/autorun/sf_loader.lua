@@ -1,7 +1,4 @@
-AddCSLuaFile("imgui.lua")
 hook.Add("DarkRPFinishedLoading", "sfloader", function()
-    AddCSLuaFile("imgui.lua")
-    imgui = include("imgui.lua")
     print("sf_loader has intialized!")
 
     -- REGISTER NEEDED VARIABLES DarkRP
@@ -11,6 +8,7 @@ hook.Add("DarkRPFinishedLoading", "sfloader", function()
 
     -- sv_objective.lua
     DarkRP.registerDarkRPVar("currentMission", net.WriteString, net.ReadString)
+
 
 
     hook.Add("PlayerInitialSpawn", "sv_objective", function(ply)

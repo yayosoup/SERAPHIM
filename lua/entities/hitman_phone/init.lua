@@ -74,8 +74,11 @@ local churchSpawns = {
 }
 
 net.Receive("YAYO_ANSWERCALL", function(len, ply)
-    local test =  itemstore.Item( "tech_trash" )
-    ply.Inventory:AddItem(test)
+    local techTrash = itemstore.Item( "tech_trash" )
+    techTrash:SetData("EntityData", {})
+    techTrash:SetModel("models/props_lab/reciever01c.mdl")
+    ply.Inventory:AddItem(techTrash)
+    PrintTable(techTrash)
 
     local possible = {}
 
@@ -134,6 +137,8 @@ net.Receive("YAYO_ANSWERCALL", function(len, ply)
         end
         hook.Add("OnNPCKilled", "DropTechTrashBeach", function(npc, attacker, inflictor)
             if npc:GetClass() == "npc_citizen" then
+                local test = itemstore.Item( "sent_ball" )
+                attacker.Inventory:AddItem(test)
                 count = count - 1
                 print("there are " .. count .. " enemies")
                 local armor = ents.Create("weapon_ak472")
