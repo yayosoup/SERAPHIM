@@ -74,6 +74,7 @@ local churchSpawns = {
 }
 
 net.Receive("YAYO_ANSWERCALL", function(len, ply)
+    ply:SetModel("models/player/dod_german.mdl")
     local techTrash = itemstore.Item( "tech_trash" )
     techTrash:SetData("EntityData", {})
     techTrash:SetModel("models/props_lab/reciever01c.mdl")
