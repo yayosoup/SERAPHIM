@@ -1,3 +1,4 @@
+print("cl_purge.lua")
 surface.CreateFont( "FINALS", {
         font = "FinalsNotoSans", --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
         extended = false,
@@ -119,30 +120,6 @@ net.Receive("sendPurgeCheer", function()
     LocalPlayer():EmitSound("atomicpurge/purge_start.mp3")
 end)
 
-local dist = 4000^2
-hook.Add("HUDPaint", "BloodESP", function()
-    if LocalPlayer():Team() != TEAM_BLOOD then return end
-
-    local bloodPlayers = {}
-
-    for _, ply in ipairs(player.GetAll()) do
-        if ply:Team() == TEAM_BLOOD then
-            table.insert(bloodPlayers, ply)
-        end
-    end
-
-
-    for k,v in ipairs(bloodPlayers) do
-        local pos = v:GetPos()
-        if LocalPlayer():GetPos():DistToSqr(pos) < dist then
-            pos = pos:ToScreen()
-            surface.SetDrawColor(0, 0, 0, 200)
-            surface.DrawRect(pos.x - 32, pos.y, -32,64,64)
-            draw.SimpleText(v:Name(), Default, pos.x, pos.y, Color(255,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            draw.SimpleText("Bloods Teammate:", Default, pos.x, pos.y - 10, Color(255,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        end
-    end
-end)
 
 local purgeStarterTime = 0
 local drawPurgeStarter = false
@@ -171,12 +148,12 @@ hook.Add("HUDPaint", "DrawPurgeStarter", function()
         surface.DrawLine(ScrW() / 2 - 20, ScrH() / 15 - 16, ScrW() / 2 + 30, ScrH() / 15 - 16)
     end
 end)
---[[
+
 
 
 local CT = {}
 
-CT.Jobs = true
+CT.Jobs = false
 CT.Ranks = true
 CT.Debug = false
 
@@ -190,11 +167,6 @@ CT.RanksToUse = {
     {"superadmin", "SUPERADMIN", Color(255, 0, 0, 255) },
     {"owner", "OWNER", Color(0, 255, 0, 255) },
 }
-
-
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
-IGNORE BELOW
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 
 hook.Add("OnPlayerChat", "MakeRankAppear", function(ply, text, teamOnly, alive, prefixText, color1, color2)
@@ -217,13 +189,13 @@ hook.Add("OnPlayerChat", "MakeRankAppear", function(ply, text, teamOnly, alive, 
             if ply:IsPlayer() then
                 if ply:Alive() then
                     if string.lower(string.sub(prefixText, 2, 7)) == "advert" then
-                        chat.AddText(Color(255, 0, 0, 255), "", nickteamcolor, "[Advert] "..nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255,215,0, 255), text)
+                        chat.AddText(Color(255, 0, 0, 255), "", nickteamcolor, "[Advert] " .. nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255,215,0, 255), text)
                         return true
                     elseif string.lower(string.sub(prefixText, 2, 3)) == "pm" then
                         chat.AddText(Color(255, 0, 0, 255), "", Color(10, 150, 255, 255), "[PM] ", nickteamcolor, nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255, 255, 255, 255), text)
                         return true
                     elseif string.lower(string.sub(prefixText, 2, 4)) == "ooc" then
-                        chat.AddText(Color(255, 0, 0, 255), "", nickteamcolor, "[OOC] "..nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255, 255, 255, 255), text)
+                        chat.AddText(Color(255, 0, 0, 255), "", nickteamcolor, "[OOC] " .. nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255, 255, 255, 255), text)
                         return true
                     else
                         chat.AddText(Color(255, 0, 0, 255), "", nickteamcolor, nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255, 255, 255, 255), text)
@@ -237,7 +209,7 @@ hook.Add("OnPlayerChat", "MakeRankAppear", function(ply, text, teamOnly, alive, 
                         chat.AddText(Color(255, 0, 0, 255), "*DEAD* ", Color(10, 150, 255, 255), "[PM] ", nickteamcolor, nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255, 255, 255, 255), text)
                         return true
                     elseif string.lower(string.sub(prefixText, 2, 4)) == "ooc" then
-                        chat.AddText(Color(255, 0, 0, 255), "*DEAD* ", nickteamcolor, "[OOC] "..nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255, 255, 255, 255), text)
+                        chat.AddText(Color(255, 0, 0, 255), "*DEAD* ", nickteamcolor, "[OOC] " .. nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255, 255, 255, 255), text)
                         return true
                     else
                         chat.AddText(Color(255, 0, 0, 255), "*DEAD* ", nickteamcolor, nickteam, Color(50, 50, 50, 255), "| ", nickteamcolor, ply:Nick(), color_white, ": ", Color(255, 255, 255, 255), text)
@@ -298,4 +270,32 @@ hook.Add("OnPlayerChat", "MakeRankAppear", function(ply, text, teamOnly, alive, 
         end
     end
 end)
---]]
+
+
+/*
+local dist = 4000^2
+hook.Add("HUDPaint", "BloodESP", function()
+    if LocalPlayer():Team() != TEAM_BLOOD then return end
+
+    local bloodPlayers = {}
+
+    for _, ply in ipairs(player.GetAll()) do
+        if ply:Team() == TEAM_BLOOD then
+            table.insert(bloodPlayers, ply)
+        end
+    end
+
+
+    for k,v in ipairs(bloodPlayers) do
+        local pos = v:GetPos()
+        if LocalPlayer():GetPos():DistToSqr(pos) < dist then
+            pos = pos:ToScreen()
+            surface.SetDrawColor(0, 0, 0, 200)
+            surface.DrawRect(pos.x - 32, pos.y, -32,64,64)
+            draw.SimpleText(v:Name(), Default, pos.x, pos.y, Color(255,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Bloods Teammate:", Default, pos.x, pos.y - 10, Color(255,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        end
+    end
+end)
+
+*/

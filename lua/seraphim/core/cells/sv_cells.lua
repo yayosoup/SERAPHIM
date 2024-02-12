@@ -2,18 +2,20 @@ local _P = FindMetaTable("Player")
 
 util.AddNetworkString("updateCells")
 
+
 function _P:CellsSave()
     self:SetPData("cells", self:GetNWInt("cells"))
 end
 
 function _P:CellsLoad()
     local testCells = self:GetPData("cells")
-    print("Loading cells for " .. self:Nick() .. testCells)
-    if  self:GetPData("cells") == nil  then
+    if testCells == nil then
+        print("No cells found for " .. self:Nick() .. ". Setting to 1.")
         self:SetPData("cells", 1)
         self:SetNWInt("cells", 1)
     else
-        self:SetNWInt("cells", self:GetPData("cells"))
+        print("Loading cells for " .. self:Nick() .. ": " .. testCells)
+        self:SetNWInt("cells", testCells)
     end
     net.Start("updateCells")
         net.WriteInt(self:GetNWInt("cells"), 32)
@@ -40,7 +42,7 @@ hook.Add("PlayerDisconnected", "CellsSave", function(ply)
     ply:CellsSave()
 end)
 
-timer.Create("CellsCheck", 5, 0, function()
+timer.Create("CellsCheck", 2, 0, function()
     for k , v in pairs(player.GetAll()) do
         v:AddCells(1)
         net.Start("updateCells")
