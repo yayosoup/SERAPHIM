@@ -50,3 +50,8 @@ timer.Create("CellsCheck", 2, 0, function()
         net.Send(v)
     end
 end)
+
+function _P:canAffordCells(amount)
+    if not amount or self.DarkRPUnInitialized then return false end
+    return math.floor(amount) >= 0 and (self:GetNWInt("cells") or 0) - math.ceil(amount) >= 0
+end
