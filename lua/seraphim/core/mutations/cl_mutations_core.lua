@@ -1,4 +1,5 @@
--- Load mutations when player loads in 
+-- Load mutations when player loads in
+PrintTable(YAYO_MUTATION)
 function YAYO_MUTATION.IsPlayerLoaded()
     if IsValid(LocalPlayer()) then
         YAYO_MUTATION.ply = LocalPlayer()
