@@ -4,19 +4,6 @@ TEXT = {}
 if not file.IsDir("seraphim", "DATA") then file.CreateDir("seraphim") end
 if not file.IsDir("seraphim/mutation", "DATA") then file.CreateDir("seraphim/mutation") end
 
-function TEXT:LoadMutations( ply )
-    local json = file.Read("seraphim/mutation/" .. (ply:SteamID64() or "0") .. ".txt", "DATA")
-
-    if json then
-    local inv = util.JSONToTable( json )
-
-    if inv then
-        for k,v in pairs ( inv ) do
-            ply:SetNWBool( k, v )
-        end
-    end
-end
-
 function TEXT:SaveMutations( ply )
     print("saving")
     local keys = {"hasHotHead", "hasBitRot"}
@@ -29,6 +16,21 @@ function TEXT:SaveMutations( ply )
     local mutationsJson = util.TableToJSON( mut )
     file.Write("seraphim/mutation/" .. (ply:SteamID64() or "0") .. ".txt", mutationsJson)
 end
+
+function TEXT:LoadMutations( ply )
+    print("loading mutations for " .. ply:Nick())
+    local json = file.Read("seraphim/mutation/" .. (ply:SteamID64() or "0") .. ".txt", "DATA")
+
+    if json then
+    local inv = util.JSONToTable( json )
+
+    if inv then
+        for k,v in pairs ( inv ) do
+            ply:SetNWBool( k, v )
+        end
+    end
+end
+
 
 function YAYO_MUTATION.Data.Run(func_name, ...)
     local func = YAYO_MUTATION.Data.Text[func_name]

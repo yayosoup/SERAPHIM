@@ -182,6 +182,11 @@ hook.Add(
                 modulePath = "mutations/",
                 type = "SERVER"
             },
+            {
+                name = "cl_mutations_vgui",
+                modulePath = "mutations/",
+                type = "CLIENT"
+            },
 
         }
 

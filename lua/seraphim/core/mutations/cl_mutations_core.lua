@@ -1,12 +1,29 @@
 -- Load mutations when player loads in
-PrintTable(YAYO_MUTATION)
 function YAYO_MUTATION.IsPlayerLoaded()
     if IsValid(LocalPlayer()) then
+        print("Player is loaded")
         YAYO_MUTATION.ply = LocalPlayer()
         YAYO_MUTATION.ply.YAYO_MUTATION = {}
-        net.Start("YAYO_MUTATION_PlayerJoined")
+        net.Start("YAYO_MUTATION.PlayerJoined")
         net.SendToServer()
-        hook.Remove("HudPaint", "YAYO_MUTATION_IsPlayerLoaded")
+        timer.Remove("YAYO_MUTATION_IsPlayerLoaded_Timer")
     end
 end
-hook.Add("HudPaint", "YAYO_MUTATION_IsPlayerLoaded", YAYO_MUTATION.IsPlayerLoaded)
+
+timer.Create("YAYO_MUTATION_IsPlayerLoaded_Timer", 1, 0, YAYO_MUTATION.IsPlayerLoaded)
+
+
+local function OpenMutationMenu()
+    if IsValid(YayoMutationMainFrame) then
+        YayoMutationMainFrame:Remove()
+    end
+
+    YayoMutationMainFrame = vgui.Create("YayoMutationFrame")
+    YayoMutationMainFrame:Center()
+    YayoMutationMainFrame:MakePopup()
+    YayoMutationMainFrame:Show()
+end
+
+net.Receive("YAYO_MUTATION.OpenMenu", function()
+    OpenMutationMenu()
+end)
