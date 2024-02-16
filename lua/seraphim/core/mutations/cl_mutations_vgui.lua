@@ -7,7 +7,7 @@ function PANEL:Init()
     self:SetSize(scrw * .5, scrh * .8)
     self:Center()
     self:MakePopup()
-    self:SideBar()
+    
 end
 
 function PANEL:Paint( w, h )
@@ -26,13 +26,14 @@ function PANEL:ScrollBar()
 
     self:Add("DScrollPanel")
     self:Dock(FILL)
+    self:DrawMutations()
 end
 
 function PANEL:DrawMutations()
     if IsValid(self.mutPanel) then
         self.mutPanel:Remove()
     end
-    self.mutPanel = vgui.Create("DPanel", self)
+    self.mutPanel = self:Add("DPanel") 
 
 end
 

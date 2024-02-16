@@ -8,6 +8,7 @@ net.Receive("YAYO_MUTATION.PlayerJoined", function(len, ply)
     TEXT:LoadMutations( ply )
 
 end)
+/*
 
 hook.Add("Tick", "YAYO_MUTATION.SaveOnWrite", function()
     for _, ply in ipairs( player.GetAll() ) do
@@ -18,6 +19,10 @@ hook.Add("Tick", "YAYO_MUTATION.SaveOnWrite", function()
     end
 end)
 
+*/
+
+
+
 hook.Add("PlayerDeath", "TeSTINGFORSURE", function(ply)
     print(ply:GetNWBool("hasHotHead"))
     ply:QueueMutationSave()
@@ -25,7 +30,10 @@ hook.Add("PlayerDeath", "TeSTINGFORSURE", function(ply)
 end)
 
 net.Receive("YAYO_MUTATION.PlayerPurchaseAttempt", function( len, ply )
-    
+    local mutation = net.ReadString()
+    if YAYO_MUTATION.Catalog[mutation] then
+        print("Player " .. ply:Nick() .. " is attempting to purchase " .. mutation)
+    end
 end)
 
 hook.Add("PlayerSay", "YAYO_MUTATION.OpenMenu", function( ply, text )
