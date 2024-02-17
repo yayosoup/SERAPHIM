@@ -7,7 +7,6 @@ function PANEL:Init()
     self:SetSize(scrw * .5, scrh * .8)
     self:Center()
     self:MakePopup()
-    
 end
 
 function PANEL:Paint( w, h )
@@ -33,7 +32,7 @@ function PANEL:DrawMutations()
     if IsValid(self.mutPanel) then
         self.mutPanel:Remove()
     end
-    self.mutPanel = self:Add("DPanel") 
+    self.mutPanel = self:Add("DPanel")
 
 end
 

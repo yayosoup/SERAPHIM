@@ -1,5 +1,7 @@
 util.AddNetworkString("YAYO_MUTATION.PlayerJoined")
 util.AddNetworkString("YAYO_MUTATION.PlayerPurchaseAttempt")
+util.AddNetworkString("YAYO_MUTATION.PlayerPurchaseFailed")
+util.AddNetworkString("YAYO_MUTATION.PlayerPurchaseSuccess")
 util.AddNetworkString("YAYO_MUTATION.OpenMenu")
 
 net.Receive("YAYO_MUTATION.PlayerJoined", function(len, ply)
@@ -21,18 +23,21 @@ end)
 
 */
 
-
-
-hook.Add("PlayerDeath", "TeSTINGFORSURE", function(ply)
-    print(ply:GetNWBool("hasHotHead"))
-    ply:QueueMutationSave()
-    ply:SetNWBool("hasHotHead", true)
-end)
-
 net.Receive("YAYO_MUTATION.PlayerPurchaseAttempt", function( len, ply )
     local mutation = net.ReadString()
     if YAYO_MUTATION.Catalog[mutation] then
         print("Player " .. ply:Nick() .. " is attempting to purchase " .. mutation)
+        if ply:canAffordCells( YAYO_MUTATION.Catalog[mutation].cells ) then
+            ply:SetNWBool( YAYO_MUTATION.Catalog[mutation].bool, true )
+            ply:RemoveCells( YAYO_MUTATION.Catalog[mutation].cells )
+            net.Start("YAYO_MUTATION.PlayerPurchaseSuccess")
+            net.Send(ply)
+            TEXT:SaveMutations( ply )
+        else
+            print("Player " .. ply:Nick() .. " cannot afford " .. mutation)
+            net.Start("YAYO_MUTATION.PlayerPurchaseFailed")
+            net.Send(ply)
+        end
     end
 end)
 
@@ -40,4 +45,33 @@ hook.Add("PlayerSay", "YAYO_MUTATION.OpenMenu", function( ply, text )
     if string.lower(text) ~= string.lower("!mut") then return end
     net.Start("YAYO_MUTATION.OpenMenu")
     net.Send(ply)
+end)
+
+/*-----------------------------------------------------------------------------------------------*/
+
+local function CreateExplosion(inf, atk, org)
+    util.BlastDamage(inf, atk, org, 300, 50)
+    util.ScreenShake(org, 5, 5, 1, 300)
+
+    local effectData = EffectData()
+    effectData:SetStart(org)
+    effectData:SetOrigin(org)
+    effectData:SetScale(1)
+    effectData:SetMagnitude(1)
+
+    util.Effect("Explosion", effectData)
+end
+
+hook.Add("PlayerDeath", "YAYO_MUTATION.Hothead", function( vic, inf, atk)
+    print("YAYO_MUTAITON.Hothead called!")
+    if vic == atk then return end
+    if inf:GetClass() == "worldspawn" then return end
+
+    local hotHead = vic:GetNWBool("hasHotHead", false)
+    if vic:LastHitGroup() == HITGROUP_HEAD and hotHead then
+        print("Hotheaded player killed!")
+        local vicPos = vic:GetPos()
+        vic:EmitSound("ambient/explosions/explode_" .. math.random(1, 9) .. ".wav", 75, 75, CHAN_VOICE)
+        CreateExplosion(inf, atk, vicPos)
+    end
 end)

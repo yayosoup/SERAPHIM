@@ -157,6 +157,8 @@ local function explode(inf, atk, org)
 
     util.Effect("Explosion", effectData)
 end
+/*
+
 
 hook.Add("PlayerDeath", "DeadGoBoom", function(vic, inf, atk)
     if vic == atk then return end
@@ -166,6 +168,7 @@ hook.Add("PlayerDeath", "DeadGoBoom", function(vic, inf, atk)
     explode(inf, atk, vicPos)
 end)
 
+*/
 timer.Create("SendPurgeTime", 1, 0, function()
     local timeLeft = timer.TimeLeft("purgeDURATION")
     if timeLeft then

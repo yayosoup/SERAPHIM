@@ -117,7 +117,6 @@ end)
 
 net.Receive("sendPurgeCheer", function()
     surface.PlaySound("kidneydagger/radio.wav")
-    LocalPlayer():EmitSound("atomicpurge/purge_start.mp3")
 end)
 
 

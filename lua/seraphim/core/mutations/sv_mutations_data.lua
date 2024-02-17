@@ -6,7 +6,7 @@ if not file.IsDir("seraphim/mutation", "DATA") then file.CreateDir("seraphim/mut
 
 function TEXT:SaveMutations( ply )
     print("saving")
-    local keys = {"hasHotHead", "hasBitRot"}
+    local keys = {"hasHotHead", "hasBitrot", "hasSecondwind", "hasRicochet", "hasRedemption"}
     local mut = {}
 
     for _, key in pairs( keys ) do

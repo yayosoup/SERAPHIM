@@ -1,4 +1,5 @@
 -- Load mutations when player loads in
+
 function YAYO_MUTATION.IsPlayerLoaded()
     if IsValid(LocalPlayer()) then
         print("Player is loaded")
@@ -12,7 +13,7 @@ end
 
 timer.Create("YAYO_MUTATION_IsPlayerLoaded_Timer", 1, 0, YAYO_MUTATION.IsPlayerLoaded)
 
-local YayoFont = "DermaDefault"
+local YayoFont = "WorkSans20"
 
 local function OpenMutationMenu()
     if IsValid(YayoMutationMainFrame) then
@@ -41,11 +42,12 @@ function YAYO_MUTATION.Open()
         local cells = LocalPlayer():GetCells()
         surface.SetDrawColor( 28, 28, 36 )
         draw.RoundedBox(5 , 0, 0, w, h, Color( 28, 28, 36))
-        draw.SimpleText("You have " .. cells .. " cells.", "DermaDefault", w / 2 , h * 0.015,
+        draw.SimpleText("You have " .. cells .. " cells.", YayoFont, w / 2 , h * 0.015,
         color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
     local scroll = vgui.Create("DScrollPanel", YAYO_MUTATIONS.Frame)
     scroll:Dock(FILL)
+    scroll:DockMargin(0, 5, 0, 0)
 
     local sbar = scroll:GetVBar()
 
@@ -67,7 +69,6 @@ function YAYO_MUTATION.Open()
     local frameW = YAYO_MUTATIONS.Frame:GetWide()
     local yspace = frameH * 0.005
     for k,v in pairs( YAYO_MUTATION.Catalog ) do
-        print(v.name)
         local itemPanel = vgui.Create("DPanel", scroll)
         itemPanel:DockMargin(0,0,0,yspace)
         itemPanel:Dock(TOP)
@@ -130,3 +131,9 @@ function YAYO_MUTATION.Open()
         end
     end
 end
+
+net.Receive("YAYO_MUTATION.PlayerPurchaseSuccess", function()
+    chat.AddText(Color(188, 65, 59), "MUTATION ", color_grey, "|", color_white, " You have successfully purchased a mutation.")
+    YAYO_MUTATIONS.Frame:Close()
+end)
+hook.Remove("DrawVignette")
