@@ -1,16 +1,18 @@
 YAYO_MUTATION.Data = {}
 TEXT = {}
-
+YAYO_MUTATION.Keys = {"hasHotHead", "hasBitrot", "hasSecondwind", "hasRicochet", "hasRedemption", "hasChanneled"}
 if not file.IsDir("seraphim", "DATA") then file.CreateDir("seraphim") end
 if not file.IsDir("seraphim/mutation", "DATA") then file.CreateDir("seraphim/mutation") end
 
 function TEXT:SaveMutations( ply )
     print("saving")
-    local keys = {"hasHotHead", "hasBitrot", "hasSecondwind", "hasRicochet", "hasRedemption"}
     local mut = {}
 
-    for _, key in pairs( keys ) do
-        mut[key] = ply:GetNWBool( key )
+    for _, key in pairs( YAYO_MUTATION.Keys ) do
+        local mutAdd = ply:GetNWBool( key )
+        if mutAdd == true then
+            mut[key] = ply:GetNWBool( key )
+        end
     end
 
     local mutationsJson = util.TableToJSON( mut )
@@ -27,6 +29,18 @@ function TEXT:LoadMutations( ply )
     if inv then
         for k,v in pairs ( inv ) do
             ply:SetNWBool( k, v )
+            ply:SetNWInt( "mutationCount", ply:GetNWInt( "mutationCount" ) + 1 )
+        end
+    end
+end
+
+function TEXT:ResetMutations( pl )
+    print(pl:Nick() .. " has reset their mutations")
+    for _, key in pairs( YAYO_MUTATION.Keys ) do
+        local checkKey = pl:GetNWBool( key )
+        if checkKey then
+            pl:SetNWInt( "mutationCount", pl:GetNWInt( "mutationCount" ) - 1)
+            pl:SetNWBool( key, false )
         end
     end
 end

@@ -30,24 +30,65 @@ end)
 function YAYO_MUTATION.Open()
     if IsValid(YAYO_MUTATIONS.Frame) then return end
 
-
+    local playerMutation = LocalPlayer():GetNWInt("mutationCount", 0)
     local scrw, scrh = ScrW(), ScrH()
     YAYO_MUTATIONS.Frame = vgui.Create("DFrame")
     YAYO_MUTATIONS.Frame:SetSize(scrw * .8, scrh * .8)
     YAYO_MUTATIONS.Frame:Center()
     YAYO_MUTATIONS.Frame:SetTitle("")
-    YAYO_MUTATIONS.Frame:MakePopup()
+    YAYO_MUTATIONS.Frame:MakePopup(true)
     YAYO_MUTATIONS.Frame:ShowCloseButton(false)
+
     YAYO_MUTATIONS.Frame.Paint = function(me,w,h)
+        Derma_DrawBackgroundBlur(me, me.m_fCreateTime)
+        draw.RoundedBox(0, 0, 0, w, h, Color(30, 30, 30, 200))
+
         local cells = LocalPlayer():GetCells()
         surface.SetDrawColor( 28, 28, 36 )
-        draw.RoundedBox(10 , 0, 0, w, h, Color( 28, 28, 36))
-        draw.SimpleText("You have " .. cells .. " cells.", YayoFont, w / 2 , h * 0.015,
+        draw.RoundedBox(5 , 0, 0, w, h, Color( 28, 28, 36))
+        draw.SimpleText("You have " .. cells .. " Cells", YayoFont, w / 2 , h * 0.015,
+        color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("You have " .. playerMutation .. "/5" .. " Mutations", YayoFont, w / 2 , h * 0.030,
         color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
+
+
+
+
+    local frameH = YAYO_MUTATIONS.Frame:GetTall()
+    local frameW = YAYO_MUTATIONS.Frame:GetWide()
+    local marginSpace = frameW * 0.015
+
+    local resetMutations = vgui.Create("DButton", YAYO_MUTATIONS.Frame)
+    resetMutations:Dock(BOTTOM)
+    resetMutations:SetTall(frameH * 0.05)
+    resetMutations:SetPos(frameW / 2, frameH * 0.9)
+
+    resetMutations:SetText("")
+    resetMutations.Paint = function(me,w,h)
+        surface.SetDrawColor( 154, 3, 30)
+        surface.DrawRect(0,0,w,h)
+        draw.SimpleText("RESET MUTATIONS | -$1,000,000", "YayoWorkSans20Bold", w / 2, h / 2,
+        Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    end
+    resetMutations.DoClick = function()
+
+        Derma_Query(
+            "You will lose $1,000,000 and all mutations. Are you sure you want to reset your mutations?",
+            "Confirmation:",
+            "Yes",
+            function()
+                net.Start("YAYO_MUTATION.ResetMutations")
+                net.SendToServer()
+            end,
+            "No",
+            function()
+        end)
+    end
+
     local scroll = vgui.Create("DScrollPanel", YAYO_MUTATIONS.Frame)
     scroll:Dock(FILL)
-    scroll:DockMargin(0, 5, 0, 0)
+    scroll:DockMargin(0, 10, 0, 0)
 
     local sbar = scroll:GetVBar()
 
@@ -63,10 +104,14 @@ function YAYO_MUTATION.Open()
     function sbar.btnGrip:Paint(w, h)
         draw.RoundedBox(8, w * 0.5, 0, w * .4, h, Color( 36, 39, 46 ))
     end
+    local keys = {}
+    for k in pairs(YAYO_MUTATION.Catalog) do
+        table.insert(keys, k)
+    end
+
+    table.sort(keys)
 
 
-    local frameH = YAYO_MUTATIONS.Frame:GetTall()
-    local frameW = YAYO_MUTATIONS.Frame:GetWide()
     local yspace = frameH * 0.005
     for k,v in pairs( YAYO_MUTATION.Catalog ) do
         local itemPanel = vgui.Create("DPanel", scroll)
@@ -74,7 +119,6 @@ function YAYO_MUTATION.Open()
         itemPanel:Dock(TOP)
         itemPanel:SetTall(frameH * 0.1)
 
-        local marginSpace = frameW * 0.015
         local icon = vgui.Create("DImage", itemPanel)
         icon:SetSize(itemPanel:GetWide() * 1.2, itemPanel:GetTall() * 1.) -- Set the size of the icon
         icon:SetPos(itemPanel:GetWide() * 0.2,2) -- Set the image of the icon
@@ -84,12 +128,14 @@ function YAYO_MUTATION.Open()
             local padding = w * 0.07
             surface.SetDrawColor( 36, 39, 46 )
             surface.DrawRect(0,0,w,h)
-            draw.SimpleText(v.name, YayoFont, padding , h * 0.1,
+            draw.SimpleText(v.name, "YayoWorkSans35", padding , h * 0.1,
             color_red, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-            draw.SimpleText(v.description, YayoFont, padding , h * 0.4,
+            draw.SimpleText(v.description, "YayoWorkSans20", padding , h * 0.4,
             color_red, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-            draw.SimpleText("Cost: " .. v.cells .. "C", YayoFont, padding , h * 0.7,
+            draw.SimpleText("Cost: ", "YayoWorkSans20", padding , h * 0.7,
             color_red, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+            draw.SimpleText(v.cells .. "C", "YayoWorkSans20Bold", padding * 1.35, h * 0.72,
+            Color( 154, 3, 30 ), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
         end
 
 
@@ -102,7 +148,7 @@ function YAYO_MUTATION.Open()
             cantPurchase.Paint = function(me,w,h)
                 surface.SetDrawColor( 74, 120, 86, 100)
                 surface.DrawRect(0,0,w,h)
-                draw.SimpleText("PURCHASED", "Trebuchet24", w / 2, h / 2, Color(255, 255, 255, 100), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("PURCHASED", "YayoWorkSans20Bold", w / 2, h / 2, Color(255, 255, 255, 100), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
         else
             local purchaseButton = vgui.Create("DButton", itemPanel)
@@ -113,7 +159,7 @@ function YAYO_MUTATION.Open()
             purchaseButton.Paint = function(me,w,h)
                 surface.SetDrawColor( 74, 120, 86 )
                 surface.DrawRect(0,0,w,h)
-                draw.SimpleText("PURCHASE", "Trebuchet24", w / 2, h / 2, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("PURCHASE", "YayoWorkSans20Bold", w / 2, h / 2, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
 
             purchaseButton.DoClick = function()
@@ -128,10 +174,13 @@ function YAYO_MUTATION.Open()
         local closeButton = vgui.Create("DButton", YAYO_MUTATIONS.Frame)
         closeButton:SetSize(ScrW() * 0.02, ScrH() * 0.03)
         closeButton:SetPos(YAYO_MUTATIONS.Frame:GetWide() - closeButton:GetWide(), 0)
-        closeButton:SetText("X")
+        closeButton:SetText("")
         closeButton:SetTextColor(Color(255,255,255))
         closeButton.Paint = function(self, w, h)
             --draw.RoundedBox(0, 0, 0, w, h, Color(255, 255, 255))
+            surface.SetDrawColor(255, 255, 255)
+            draw.SimpleText("X", "Trebuchet24", w / 2, h / 2, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
         end
         closeButton.DoClick = function()
             YAYO_MUTATIONS.Frame:Close()
@@ -140,7 +189,10 @@ function YAYO_MUTATION.Open()
 end
 
 net.Receive("YAYO_MUTATION.PlayerPurchaseSuccess", function()
-    chat.AddText(Color(188, 65, 59), "MUTATION ", color_grey, "|", color_white, " You have successfully purchased a mutation.")
+    chat.AddText(Color(188, 65, 59), "MUTATION ", Color(50, 50, 50, 255), "|", color_white, " You have successfully purchased a mutation.")
     YAYO_MUTATIONS.Frame:Close()
 end)
-hook.Remove("DrawVignette")
+net.Receive("YAYO_MUTATION.ResetMutationsSuccess", function()
+    chat.AddText(Color(188, 65, 59), "MUTATION ", Color(50, 50, 50, 255), "|", color_white, " You have successfully reset your mutations.")
+    YAYO_MUTATIONS.Frame:Close()
+end)

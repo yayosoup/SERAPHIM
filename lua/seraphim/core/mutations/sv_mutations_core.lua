@@ -3,6 +3,8 @@ util.AddNetworkString("YAYO_MUTATION.PlayerPurchaseAttempt")
 util.AddNetworkString("YAYO_MUTATION.PlayerPurchaseFailed")
 util.AddNetworkString("YAYO_MUTATION.PlayerPurchaseSuccess")
 util.AddNetworkString("YAYO_MUTATION.OpenMenu")
+util.AddNetworkString("YAYO_MUTATION.ResetMutations")
+util.AddNetworkString("YAYO_MUTATION.ResetMutationsSuccess")
 
 net.Receive("YAYO_MUTATION.PlayerJoined", function(len, ply)
     if not IsValid(ply) then return end
@@ -23,12 +25,39 @@ end)
 
 */
 
+
+
+net.Receive("YAYO_MUTATION.ResetMutations", function( len, ply )
+    print("Player " .. ply:Nick() .. " is attempting to reset mutations")
+
+    if ply:canAfford(1000000) then
+        print("Player " .. ply:Nick() .. " passed mutation reset checks!")
+        ply:addMoney(-1000000)
+        TEXT:ResetMutations( ply )
+        net.Start("YAYO_MUTATION.ResetMutationsSuccess")
+        net.Send(ply)
+    end
+end)
+
+hook.Add("PlayerSay", "YAYO_MUTATION.OpenMenu", function( ply, text )
+    if string.lower(text) ~= string.lower("!mut") then return end
+    net.Start("YAYO_MUTATION.OpenMenu")
+    net.Send(ply)
+end)
+
+hook.Add("PlayerSay", "YAYO_MUTATION.DebugMoney", function( ply, text )
+    if string.lower(text) ~= string.lower("!debugmoney") then return end
+    ply:addMoney(1000000000)
+end)
+
 net.Receive("YAYO_MUTATION.PlayerPurchaseAttempt", function( len, ply )
     local mutation = net.ReadString()
+    print(mutation)
     if YAYO_MUTATION.Catalog[mutation] then
         print("Player " .. ply:Nick() .. " is attempting to purchase " .. mutation)
         if ply:canAffordCells( YAYO_MUTATION.Catalog[mutation].cells ) then
             ply:SetNWBool( YAYO_MUTATION.Catalog[mutation].bool, true )
+            ply:SetNWInt( "mutationCount" , ply:GetNWInt("mutationCount") + 1)
             ply:RemoveCells( YAYO_MUTATION.Catalog[mutation].cells )
             net.Start("YAYO_MUTATION.PlayerPurchaseSuccess")
             net.Send(ply)
@@ -39,12 +68,6 @@ net.Receive("YAYO_MUTATION.PlayerPurchaseAttempt", function( len, ply )
             net.Send(ply)
         end
     end
-end)
-
-hook.Add("PlayerSay", "YAYO_MUTATION.OpenMenu", function( ply, text )
-    if string.lower(text) ~= string.lower("!mut") then return end
-    net.Start("YAYO_MUTATION.OpenMenu")
-    net.Send(ply)
 end)
 
 /*-----------------------------------------------------------------------------------------------*/
