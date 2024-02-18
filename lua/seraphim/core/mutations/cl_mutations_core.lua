@@ -33,7 +33,7 @@ function YAYO_MUTATION.Open()
 
     local scrw, scrh = ScrW(), ScrH()
     YAYO_MUTATIONS.Frame = vgui.Create("DFrame")
-    YAYO_MUTATIONS.Frame:SetSize(scrw * .5, scrh * .8)
+    YAYO_MUTATIONS.Frame:SetSize(scrw * .8, scrh * .8)
     YAYO_MUTATIONS.Frame:Center()
     YAYO_MUTATIONS.Frame:SetTitle("")
     YAYO_MUTATIONS.Frame:MakePopup()
@@ -41,7 +41,7 @@ function YAYO_MUTATION.Open()
     YAYO_MUTATIONS.Frame.Paint = function(me,w,h)
         local cells = LocalPlayer():GetCells()
         surface.SetDrawColor( 28, 28, 36 )
-        draw.RoundedBox(5 , 0, 0, w, h, Color( 28, 28, 36))
+        draw.RoundedBox(10 , 0, 0, w, h, Color( 28, 28, 36))
         draw.SimpleText("You have " .. cells .. " cells.", YayoFont, w / 2 , h * 0.015,
         color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
@@ -73,8 +73,15 @@ function YAYO_MUTATION.Open()
         itemPanel:DockMargin(0,0,0,yspace)
         itemPanel:Dock(TOP)
         itemPanel:SetTall(frameH * 0.1)
+
+        local marginSpace = frameW * 0.015
+        local icon = vgui.Create("DImage", itemPanel)
+        icon:SetSize(itemPanel:GetWide() * 1.2, itemPanel:GetTall() * 1.) -- Set the size of the icon
+        icon:SetPos(itemPanel:GetWide() * 0.2,2) -- Set the image of the icon
+        icon:SetImage(v.icon) -- Set the image of the icon
+
         itemPanel.Paint = function(me,w,h)
-            local padding = w * 0.01
+            local padding = w * 0.07
             surface.SetDrawColor( 36, 39, 46 )
             surface.DrawRect(0,0,w,h)
             draw.SimpleText(v.name, YayoFont, padding , h * 0.1,
@@ -85,12 +92,12 @@ function YAYO_MUTATION.Open()
             color_red, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
         end
 
-        local marginSpace = frameW * 0.015
+
         if LocalPlayer():GetNWBool(v.bool) then
             local cantPurchase = vgui.Create("DButton", itemPanel)
             cantPurchase:Dock(RIGHT)
             cantPurchase:SetWide(frameW * 0.2)
-            cantPurchase:DockMargin(0, marginSpace, marginSpace, marginSpace)
+            cantPurchase:DockMargin(0, marginSpace * 0.5, marginSpace, marginSpace)
             cantPurchase:SetText("")
             cantPurchase.Paint = function(me,w,h)
                 surface.SetDrawColor( 74, 120, 86, 100)
@@ -101,7 +108,7 @@ function YAYO_MUTATION.Open()
             local purchaseButton = vgui.Create("DButton", itemPanel)
             purchaseButton:Dock(RIGHT)
             purchaseButton:SetWide(frameW * 0.2)
-            purchaseButton:DockMargin(0, marginSpace, marginSpace, marginSpace)
+            purchaseButton:DockMargin(0, marginSpace * 0.5, marginSpace, marginSpace)
             purchaseButton:SetText("")
             purchaseButton.Paint = function(me,w,h)
                 surface.SetDrawColor( 74, 120, 86 )
