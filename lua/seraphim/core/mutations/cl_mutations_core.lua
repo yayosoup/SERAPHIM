@@ -28,6 +28,7 @@ net.Receive("YAYO_MUTATION.OpenMenu", function()
 end)
 
 function YAYO_MUTATION.Open()
+    -- awesome mode
     if IsValid(YAYO_MUTATIONS.Frame) then return end
 
     local playerMutation = LocalPlayer():GetNWInt("mutationCount", 0)
