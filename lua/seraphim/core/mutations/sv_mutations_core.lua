@@ -98,3 +98,19 @@ hook.Add("PlayerDeath", "YAYO_MUTATION.Hothead", function( vic, inf, atk)
         CreateExplosion(inf, atk, vicPos)
     end
 end)
+
+concommand.Add("hellodebug", function( ply )
+    local dmginfo = DamageInfo()
+    dmginfo:SetDamage(99)
+    dmginfo:SetAttacker(game.GetWorld())
+    dmginfo:SetDamageType( DMG_SHOCK )
+
+    timer.Create("ShockDamageTimer", 1, 5, function()
+        if IsValid(ply) then
+            print("Player is taking damage!")
+            ply:TakeDamageInfo(dmginfo)
+        else
+            timer.Remove("ShockDamageTimer")
+        end
+    end)
+end)

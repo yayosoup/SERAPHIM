@@ -197,3 +197,61 @@ net.Receive("YAYO_MUTATION.ResetMutationsSuccess", function()
     chat.AddText(Color(188, 65, 59), "MUTATION ", Color(50, 50, 50, 255), "|", color_white, " You have successfully reset your mutations.")
     YAYO_MUTATIONS.Frame:Close()
 end)
+
+concommand.Add("playTypingSounds", function()
+    local startTime = CurTime() -- Get the current time
+    local totalDuration = math.random(1,2) -- Randomize the total duration of the typing sounds
+    print(totalDuration)
+
+    -- Create a timer that ticks every 0.1 seconds
+    timer.Create("TypingSoundTimer", .13, 0, function()
+        if CurTime() - startTime < totalDuration then
+            -- If less than 20 seconds have passed, play a random typing sound
+            local num = math.random(1, 8)
+            local soundPath = "ui/textline_" .. num .. ".wav"
+            surface.PlaySound(soundPath)
+        else
+            -- If 20 seconds have passed, play the end sound and stop the timer
+            surface.PlaySound("ui/textline_end.wav")
+            timer.Remove("TypingSoundTimer")
+        end
+    end)
+end)
+
+local start, oldhp, newhp = 0, -1, -1
+local barW = 200
+local animationTime = 0.5 -- seconds
+
+hook.Add( "HUDPaint", "LerpAnimation", function()
+	-- Local player still loading, do nothing
+	if ( !IsValid( LocalPlayer() ) ) then return end
+
+	local hp = LocalPlayer():Health()
+	local maxhp = LocalPlayer():GetMaxHealth()
+
+	-- The values are not initialized yet, do so right now
+	if ( oldhp == -1 and newhp == -1 ) then
+		oldhp = hp
+		newhp = hp
+	end
+
+	-- You can use a different smoothing function here
+	local smoothHP = Lerp( ( SysTime() - start ) / animationTime, oldhp, newhp )
+
+	-- Health was changed, initialize the animation
+	if newhp ~= hp then
+		-- Old animation is still in progress, adjust
+		if ( smoothHP ~= hp ) then
+			-- Pretend our current "smooth" position was the target so the animation will
+			-- not jump to the old target and start to the new target from there
+			newhp = smoothHP
+		end
+
+		oldhp = newhp
+		start = SysTime()
+		newhp = hp
+	end
+
+	draw.RoundedBox( 4, 100, 200, barW, 100, Color( 0, 0, 0, 150) )
+	draw.RoundedBox( 4, 100, 200, math.max( 0, smoothHP ) / maxhp * barW, 100, Color(200,100,100) )
+end )
