@@ -162,7 +162,24 @@ function YAYO_MUTATION.Open()
                 surface.DrawRect(0,0,w,h)
                 draw.SimpleText("PURCHASE", "YayoWorkSans20Bold", w / 2, h / 2, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
+        purchaseButton.Paint = function(me, w, h)
+            if me:IsHovered() then
+                if not me.SoundPlayed then
+                    -- Play the sound and set the flag
+                    surface.PlaySound("placenta/ui/weapon_select.wav")
+                    me.SoundPlayed = true
+                end
 
+                surface.SetDrawColor(100, 150, 120)
+            else
+                -- Reset the flag when the mouse leaves the button
+                me.SoundPlayed = false
+                surface.SetDrawColor(74, 120, 86)
+            end
+
+            surface.DrawRect(0, 0, w, h)
+            draw.SimpleText("PURCHASE", "YayoWorkSans20Bold", w / 2, h / 2, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        end
             purchaseButton.DoClick = function()
                 print("Attempting to purchase " .. k)
                 net.Start("YAYO_MUTATION.PlayerPurchaseAttempt")
@@ -200,7 +217,7 @@ end)
 
 concommand.Add("playTypingSounds", function()
     local startTime = CurTime() -- Get the current time
-    local totalDuration = math.random(1,2) -- Randomize the total duration of the typing sounds
+    local totalDuration = math.random(50,100) -- Randomize the total duration of the typing sounds
     print(totalDuration)
 
     -- Create a timer that ticks every 0.1 seconds
@@ -217,41 +234,3 @@ concommand.Add("playTypingSounds", function()
         end
     end)
 end)
-
-local start, oldhp, newhp = 0, -1, -1
-local barW = 200
-local animationTime = 0.5 -- seconds
-
-hook.Add( "HUDPaint", "LerpAnimation", function()
-	-- Local player still loading, do nothing
-	if ( !IsValid( LocalPlayer() ) ) then return end
-
-	local hp = LocalPlayer():Health()
-	local maxhp = LocalPlayer():GetMaxHealth()
-
-	-- The values are not initialized yet, do so right now
-	if ( oldhp == -1 and newhp == -1 ) then
-		oldhp = hp
-		newhp = hp
-	end
-
-	-- You can use a different smoothing function here
-	local smoothHP = Lerp( ( SysTime() - start ) / animationTime, oldhp, newhp )
-
-	-- Health was changed, initialize the animation
-	if newhp ~= hp then
-		-- Old animation is still in progress, adjust
-		if ( smoothHP ~= hp ) then
-			-- Pretend our current "smooth" position was the target so the animation will
-			-- not jump to the old target and start to the new target from there
-			newhp = smoothHP
-		end
-
-		oldhp = newhp
-		start = SysTime()
-		newhp = hp
-	end
-
-	draw.RoundedBox( 4, 100, 200, barW, 100, Color( 0, 0, 0, 150) )
-	draw.RoundedBox( 4, 100, 200, math.max( 0, smoothHP ) / maxhp * barW, 100, Color(200,100,100) )
-end )

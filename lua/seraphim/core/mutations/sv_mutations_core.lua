@@ -114,3 +114,17 @@ concommand.Add("hellodebug", function( ply )
         end
     end)
 end)
+
+local function addLOLTrail(ply)
+    -- Remove any existing trail first
+    if ply.Trail then
+        ply.Trail:Remove()
+    end
+
+    -- Create a new trail
+    ply.Trail = util.SpriteTrail(ply, 0, Color( 255, 255, 255), false, 30, 1, 1, 0.125, "trails/lol.vmt")
+end
+
+concommand.Add("helloTrail", function( ply )
+    addLOLTrail( ply )
+end)
