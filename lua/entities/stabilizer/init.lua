@@ -27,6 +27,7 @@ function ENT:OnTakeDamage(dmg)
         self:SetisRunning(false)
         self:StopSound("ambient/machines/machine3.wav")
         self:EmitSound("kidneydagger/printer_death.wav")
+        self:EmitSound("kidneydagger/printer_death.wav")
     end
 end
 
