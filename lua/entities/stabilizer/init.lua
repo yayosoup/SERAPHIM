@@ -35,6 +35,7 @@ function ENT:Use(Act)
     if self:GetisRunning() == false and Act:IsValid() then
         Act:ChatPrint("You have turned on the stabilizer!")
         self:EmitSound("overwatch/citywide/overwatch_anticitizenscavenging.mp3")
+        self:EmitSound("overwatch/citywide/overwatch_anticitizenscavenging.mp3")
         self:SetisRunning(true)
     end
 end
