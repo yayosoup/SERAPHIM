@@ -46,6 +46,7 @@ function ENT:Manufacture()
         if self:GetisRunning() == false then return end
         if self:Gettech_trash() == 0 then return end
         print(self:GetClass() .. " has passed checks!")
+        print(self:GetClass() .. " has passed checks!")
 
         self:Settech_trash(self:Gettech_trash() - 1)
         local chosenShipment = table.Random(CustomShipments)
