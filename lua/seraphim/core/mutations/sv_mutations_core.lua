@@ -99,7 +99,7 @@ hook.Add("PlayerDeath", "YAYO_MUTATION.Hothead", function( vic, inf, atk)
     end
 end)
 
-concommand.Add("hellodebug", function( ply )
+concommand.Add("debugtool", function( ply )
     local dmginfo = DamageInfo()
     dmginfo:SetDamage(99)
     dmginfo:SetAttacker(game.GetWorld())
