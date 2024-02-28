@@ -119,6 +119,7 @@ local function addLOLTrail(ply)
     -- Remove any existing trail first
     if ply.Trail then
         ply.Trail:Remove()
+        ply.Trail:Remove()
     end
 
     -- Create a new trail
