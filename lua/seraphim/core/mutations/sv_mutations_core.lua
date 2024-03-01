@@ -12,7 +12,7 @@ net.Receive("YAYO_MUTATION.PlayerJoined", function(len, ply)
     TEXT:LoadMutations( ply )
 
 end)
-/*
+--[[
 
 hook.Add("Tick", "YAYO_MUTATION.SaveOnWrite", function()
     for _, ply in ipairs( player.GetAll() ) do
@@ -23,7 +23,7 @@ hook.Add("Tick", "YAYO_MUTATION.SaveOnWrite", function()
     end
 end)
 
-*/
+]]
 
 
 
@@ -70,7 +70,7 @@ net.Receive("YAYO_MUTATION.PlayerPurchaseAttempt", function( len, ply )
     end
 end)
 
-/*-----------------------------------------------------------------------------------------------*/
+-- -----------------------------------------------------------------------------------------------
 
 local function CreateExplosion(inf, atk, org)
     util.BlastDamage(inf, atk, org, 300, 50)
