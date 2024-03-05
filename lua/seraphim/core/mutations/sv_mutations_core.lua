@@ -53,7 +53,8 @@ end)
 net.Receive("YAYO_MUTATION.PlayerPurchaseAttempt", function( len, ply )
     local mutation = net.ReadString()
     print(mutation)
-    if YAYO_MUTATION.Catalog[mutation] then
+    local mutCount = ply:GetNWInt("mutationCount")
+    if YAYO_MUTATION.Catalog[mutation] && mutCount < 5 then
         print("Player " .. ply:Nick() .. " is attempting to purchase " .. mutation)
         if ply:canAffordCells( YAYO_MUTATION.Catalog[mutation].cells ) then
             ply:SetNWBool( YAYO_MUTATION.Catalog[mutation].bool, true )
@@ -67,6 +68,10 @@ net.Receive("YAYO_MUTATION.PlayerPurchaseAttempt", function( len, ply )
             net.Start("YAYO_MUTATION.PlayerPurchaseFailed")
             net.Send(ply)
         end
+    else
+        print("Player " .. ply:Nick() .. " cannot purchase more than 5 mutations")
+        net.Start("YAYO_MUTATION.PlayerPurchaseFailed")
+        net.Send(ply)
     end
 end)
 
@@ -113,4 +118,21 @@ concommand.Add("debugtool", function( ply )
             timer.Remove("ShockDamageTimer")
         end
     end)
+end)
+
+concommand.Add("checkMutations", function ( ply )
+    TEXT:PrintMutations(ply)
+end)
+
+hook.Add("PlayerButtonDown", "GiveWeaponOnBPress", function(ply, button)
+    if button == KEY_B then  -- KEY_B is the enum for the "B" key
+        ply:Give("weapon_dishonored_shadowwalk")  -- Give the player the weapon
+        ply:SelectWeapon("weapon_dishonored_shadowwalk")  -- Switch to the weapon
+
+        timer.Simple(10, function()  -- After 10 seconds
+            if IsValid(ply) then  -- If the player is still valid
+                ply:SelectWeapon("weapon_physcannon")  -- Switch to the gravity gun
+            end
+        end)
+    end
 end)

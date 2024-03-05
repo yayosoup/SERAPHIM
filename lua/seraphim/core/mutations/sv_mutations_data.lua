@@ -1,6 +1,6 @@
 YAYO_MUTATION.Data = {}
-TEXT = {}
-YAYO_MUTATION.Keys = {"hasHotHead", "hasBitrot", "hasSecondwind", "hasRicochet", "hasRedemption", "hasChanneled"}
+TEXT = TEXT or {}
+YAYO_MUTATION.Keys = {"hasHothead", "hasBitrot", "hasSecondwind", "hasRicochet", "hasRedemption", "hasChanneledOccult", "hasChanneledEsoteric", "hasAdrenaline", "hasEnmitySense"}
 if not file.IsDir("seraphim", "DATA") then file.CreateDir("seraphim") end
 if not file.IsDir("seraphim/mutation", "DATA") then file.CreateDir("seraphim/mutation") end
 
@@ -43,8 +43,8 @@ function TEXT:ResetMutations( pl )
             pl:SetNWBool( key, false )
         end
     end
+    TEXT:SaveMutations( pl )
 end
-
 
 function YAYO_MUTATION.Data.Run(func_name, ...)
     local func = YAYO_MUTATION.Data.Text[func_name]

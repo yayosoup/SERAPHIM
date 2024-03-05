@@ -214,6 +214,10 @@ net.Receive("YAYO_MUTATION.ResetMutationsSuccess", function()
     chat.AddText(Color(188, 65, 59), "MUTATION ", Color(50, 50, 50, 255), "|", color_white, " You have successfully reset your mutations.")
     YAYO_MUTATIONS.Frame:Close()
 end)
+net.Receive("YAYO_MUTATION.PlayerPurchaseFailed", function()
+    chat.AddText(Color(188, 65, 59), "MUTATION ", Color(50, 50, 50, 255), "|", color_white, " You do not have enough cells or you have too many mutations!")
+    YAYO_MUTATIONS.Frame:Close()
+end)
 
 concommand.Add("playTypingSounds", function()
     local startTime = CurTime() -- Get the current time

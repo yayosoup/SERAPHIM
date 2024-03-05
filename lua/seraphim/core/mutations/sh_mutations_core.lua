@@ -41,14 +41,14 @@ YAYO_MUTATION.Catalog = {
         name = "Channeled: Occult",
         description = "You are channeled to the Occult. Double chance to be chosen to be Occult Potentials. Skinshape, Crusador, Martyr, etc.",
         cells = 10,
-        bool = "hasChanneled",
+        bool = "hasChanneledOccult",
         icon = "mutations/scholar.png"
     },
     ["chganneledEsoteric"] = {
         name = "Channeled: Esoteric",
         description = "You are channeled with the Esoterics. Double chance to be chosen to be Occult Potentials. Skinshape, Crusador, Martyr, etc.",
         cells = 10,
-        bool = "hasChanneled",
+        bool = "hasChanneledEsoteric",
         icon = "mutations/dancer.png"
     },
     ["adrenaline"] = {
