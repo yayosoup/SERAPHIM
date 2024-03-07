@@ -1,10 +1,10 @@
 ENT.Base = "base_entity"
 ENT.Type = "ai"
 
-ENT.PrintName = "first_purge_victor"
+ENT.PrintName = "dark_alter"
 ENT.Author = "yayo"
 ENT.Contact = "yayosoup@gmail.com"
-ENT.Purpose = "first_purge_victor"
+ENT.Purpose = "dark_alter"
 ENT.Instructions = "base npc entity"
 ENT.Category = "yayoitems"
 ENT.Spawnable = true

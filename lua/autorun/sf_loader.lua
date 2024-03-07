@@ -187,6 +187,21 @@ hook.Add(
                 modulePath = "mutations/",
                 type = "CLIENT"
             },
+            {
+                name = "sv_shape",
+                modulePath = "skinshape/",
+                type = "SERVER"
+            },
+            {
+                name = "sh_shape",
+                modulePath = "skinshape/",
+                type = "SHARED"
+            },
+            {
+                name = "cl_shape",
+                modulePath = "skinshape/",
+                type = "CLIENT"
+            },
 
         }
 
