@@ -14,6 +14,6 @@ function ENT:Initialize()
 end
 
 function ENT:Use( ply )
-    assign_obsession( ply )
+    ply:requestObsession()
 end
 
