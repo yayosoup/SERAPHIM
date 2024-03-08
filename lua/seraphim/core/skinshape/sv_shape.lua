@@ -2,10 +2,10 @@ local meta = FindMetaTable( "Player" )
 local obsessions = {}
 Seraphim = Seraphim or {}
 Seraphim.hooks = Seraphim.hooks or {}
-util.AddNetworkString("yayo.YouAreObsession")
-util.AddNetworkString("yayo.ShapeNewObsession")
-util.AddNetworkString("yayo.ObsessionComplete")
-util.AddNetworkString("yayo.ObsessionFailed")
+util.AddNetworkString("yayo_YouAreObsession")
+util.AddNetworkString("yayo_ShapeNewObsession")
+util.AddNetworkString("yayo_ObsessionComplete")
+util.AddNetworkString("yayo_bsessionFailed")
 
 function meta:requestObsession()
     if obsessions[self] then print(self:Nick() .. " already has an obsession!") end
@@ -36,13 +36,15 @@ function meta:setObsessionTarget( target )
     end
 
     target = players[math.random(#players)]
+    obsessions[self] = {}
+    onObsRequested( self, target )
 
     self:SetNWEntity("obsessionTarget", target )
     self:SetNWBool("hasObsession", true)
 end
 
 function meta:abortObsession()
-
+    print(self:Nick() .. " has died and aborted their obsession!")
     local check = self:GetNWEntity("obsessionTarget")
     print(check:Nick() .. " was the obsession!")
     if not obsessions[self] then print (self:Nick() .. " does not have an obsession!") return end
@@ -52,24 +54,33 @@ function meta:abortObsession()
 end
 
 function meta:finishObsession()
-    self:setObsessionTarget(nil)
     obsessions[self] = nil
+    self:SetNWBool("hasObsession", false)
 end
-function OnObsAccepted ( shape, target )
+function onObsRequested( shape, target )
+    print("onObsRequested " .. target:Nick())
+    net.Start("yayo_YouAreObsession")
+    net.Send(target)
+
+    print("onObsRequested shape " .. shape:Nick())
+    net.Start("yayo_ShapeNewObsession")
+        net.WriteEntity(target)
+    net.Send(shape)
+
+    print( shape:Nick() .. " has requested an obsession on " .. target:Nick() .. " !")
 
 end
 function onObsCompleted( shape, target )
-    net.Start("yayo.ObsessionComplete")
-        net.WriteEntity("shape")
-        net.WriteEntity("shape")
-        net.WriteEntity("shape")
+    print( shape:Nick() .. " has completed their obsession on " .. target:Nick() .. " !")
+    net.Start("yayo_ObsessionComplete")
     net.Broadcast()
 
     shape:SetNWFloat("lastObsession", CurTime())
     shape:finishObsession()
 end
+
 function onObsFailed( shape, target )
-    net.Start("yayo.ObsessionFailed")
+    net.Start("yayo_ObsessionFailed")
         net.WriteEntity("shape")
         net.WriteEntity("shape")
         net.WriteEntity("shape")
@@ -77,9 +88,10 @@ function onObsFailed( shape, target )
 end
 
 hook.Add("PlayerDeath", "yayo.ObsessionFinished", function(victim, inflictor, attacker)
-    victim:abortObsession()
     if obsessions[victim] then -- player was shape
-        
+        victim:abortObsession()
     end
-
+    if IsValid(attacker) and attacker:IsPlayer() and obsessions[attacker] then
+       onObsCompleted(attacker, victim)
+    end
 end)

@@ -9,10 +9,10 @@ function meta:isShape()
     end
 end
 function meta:hasObsession()
-    return self:getDarkRPVar("obsession") or false
+    return self:GetNWBool("hasObsession") or false
 end
 function meta:getObsessionTarget()
-    return self:getDarkRPVar("hasObsession") or false
+    return self:GetNWEntity("obsessionTarget") or false
 end
 
 function meta:canRequestObsession()
