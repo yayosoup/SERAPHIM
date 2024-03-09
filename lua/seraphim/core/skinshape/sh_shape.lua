@@ -1,5 +1,5 @@
 local meta = FindMetaTable( "Player" )
-local OBESSSION_COOLDOWN = 120
+local OBSESSION_COOLDOWN = 120
 
 function meta:isShape()
     if self:Team() == TEAM_SKINSHAPE then
@@ -18,7 +18,8 @@ end
 function meta:canRequestObsession()
     if not self:isShape() then return false end
     if self:hasObsession() then return false end
-    if IsValid( self ) and (self:GetNWFloat("lastObsession", 0) - OBESSSION_COOLDOWN) > CurTime() then return false end
+    if IsValid(self) and (CurTime() - self:GetNWFloat("lastObsession", 0)) < OBSESSION_COOLDOWN then
+    print("You have to wait! " .. math.floor(OBSESSION_COOLDOWN - (CurTime() - self:GetNWFloat("lastObsession", 0)))) return false end
 
     return true
 end

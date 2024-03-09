@@ -91,7 +91,8 @@ hook.Add("PlayerDeath", "yayo.ObsessionFinished", function(victim, inflictor, at
     if obsessions[victim] then -- player was shape
         victim:abortObsession()
     end
-    if IsValid(attacker) and attacker:IsPlayer() and obsessions[attacker] then
-       onObsCompleted(attacker, victim)
+    if IsValid(attacker) and attacker:IsPlayer() and obsessions[attacker] and attacker:getObsessionTarget() == victim then
+            onObsCompleted(attacker, victim)
     end
 end)
+

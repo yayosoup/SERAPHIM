@@ -16,7 +16,6 @@ surface.CreateFont( "SeraphimFinalsElimSub", {
 local showEliminated = false
 local eliminatedPlayerName = ""
 local background_black = Color(0, 0, 0, 200)
-local color_red = Color(255, 0, 0, 200)
 local ELIM_COLOR = Color(210, 31, 60)
 
 net.Receive("yayo_elimsound", function()
@@ -41,6 +40,7 @@ hook.Add("HUDPaint", "ApexEliminatedHUD", function()
         local eliminatedPlayerNameLength, eliminatedPlayerNameHeight = surface.GetTextSize(eliminatedPlayerName)
         local eliminatedPlayerNameTrueLength, eliminatedPlayerNameTrueHeight = eliminatedPlayerNameLength + 15, eliminatedPlayerNameHeight - 9
         print(eliminatedPlayerNameTrueLength, eliminatedPlayerNameTrueHeight)
+
         local boxX = x - eliminatedPlayerNameTrueLength / 2
         local boxY = y - eliminatedPlayerNameTrueHeight / 2 + 2
 

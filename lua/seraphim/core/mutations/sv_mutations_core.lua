@@ -5,6 +5,7 @@ util.AddNetworkString("YAYO_MUTATION.PlayerPurchaseSuccess")
 util.AddNetworkString("YAYO_MUTATION.OpenMenu")
 util.AddNetworkString("YAYO_MUTATION.ResetMutations")
 util.AddNetworkString("YAYO_MUTATION.ResetMutationsSuccess")
+util.AddNetworkString("YAYO_MUTATION.PlayerProcHothead")
 
 net.Receive("YAYO_MUTATION.PlayerJoined", function(len, ply)
     if not IsValid(ply) then return end
@@ -96,13 +97,37 @@ hook.Add("PlayerDeath", "YAYO_MUTATION.Hothead", function( vic, inf, atk)
     if inf:GetClass() == "worldspawn" then return end
 
     local hotHead = vic:GetNWBool("hasHotHead", false)
-    if vic:LastHitGroup() == HITGROUP_HEAD and hotHead then
-        print("Hotheaded player killed!")
+    if vic:LastHitGroup() == HITGROUP_HEAD && hotHead then
+        net.Start("YAYO_MUTATION.PlayerProcHothead")
+        net.Send(vic)
+        net.Start("YAYO_MUTATION.PlayerProcHothead")
+        net.Send(atk)
+
         local vicPos = vic:GetPos()
-        vic:EmitSound("ambient/explosions/explode_" .. math.random(1, 9) .. ".wav", 75, 75, CHAN_VOICE)
+        vic:EmitSound("ambient/explosions/explode_" .. math.random(1, 9) .. ".wav", 75, 100, CHAN_VOICE)
+        vic:EmitSound("placenta/head_explodie_0" .. math.random(1,4) .. ".ogg", 75, 100, CHAN_VOICE)
+        print("placenta/head_explodie_0" .. math.random(1,4) .. ".ogg")
         CreateExplosion(inf, atk, vicPos)
     end
 end)
+
+hook.Add("PlayerHurt", "YAYO_Adrenaline", function(victim, attacker)
+    if victim:hasAdrenaline() && victim:Health() < victim:GetMaxHealth() == 0.15 then
+
+    end
+end)
+
+
+
+
+
+
+
+
+
+
+
+
 
 concommand.Add("debugtool", function( ply )
     local dmginfo = DamageInfo()
@@ -120,18 +145,30 @@ concommand.Add("debugtool", function( ply )
     end)
 end)
 
+
+
+
+
+
+
+
+
+
+
+
+
 concommand.Add("checkMutations", function ( ply )
     TEXT:PrintMutations(ply)
 end)
 
 hook.Add("PlayerButtonDown", "GiveWeaponOnBPress", function(ply, button)
-    if button == KEY_B then  -- KEY_B is the enum for the "B" key
-        ply:Give("weapon_dishonored_shadowwalk")  -- Give the player the weapon
-        ply:SelectWeapon("weapon_dishonored_shadowwalk")  -- Switch to the weapon
+    if button == KEY_B and ply:Team() == TEAM_SKINSHAPE then
+        ply:Give("weapon_dishonored_shadowwalk")
+        ply:SelectWeapon("weapon_dishonored_shadowwalk")
 
-        timer.Simple(10, function()  -- After 10 seconds
-            if IsValid(ply) then  -- If the player is still valid
-                ply:SelectWeapon("weapon_physcannon")  -- Switch to the gravity gun
+        timer.Simple(10, function()
+            if IsValid(ply) then
+                ply:SelectWeapon("weapon_physcannon")
             end
         end)
     end

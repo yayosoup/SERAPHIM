@@ -1,39 +1,31 @@
-local PANEL = {}
-local scrw, scrh = ScrW(), ScrH()
+-- Initialize a variable to control the fade effect
+local alpha = 0
+local start_time = nil
+local image = Material("mutations/blackmage.png")
 
-function PANEL:Init()
-    self:SetDraggable(false)
-    self:SetTitle("You can do anything.")
-    self:SetSize(scrw * .5, scrh * .8)
-    self:Center()
-    self:MakePopup()
-end
+net.Receive("YAYO_MUTATION.PlayerProcHothead", function()
+    start_time = CurTime()
+end)
 
-function PANEL:Paint( w, h )
-    local cells = LocalPlayer():GetCells()
-        surface.SetDrawColor(0,0,0,250)
-        surface.DrawRect(0, 0, w, h)
-        draw.SimpleText("You have " .. cells .. " cells.", "DermaDefault", w / 2 , h * 0.02,
-        color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-end
+hook.Add("HUDPaint", "YAYO_MUTATION.PlayerProcedHothead", function()
+    if start_time then
+        local elapsed_time = CurTime() - start_time
+        if elapsed_time < 1 then
+            alpha = math.sin(elapsed_time * math.pi / 2)
+        elseif elapsed_time < 3 then
+            alpha = 1
+        elseif elapsed_time < 4 then
+            alpha = math.cos((elapsed_time - 3) * math.pi / 2)
+        else
+            return
+        end
 
+        surface.SetDrawColor(255, 255, 255, alpha * 255)
+        surface.SetMaterial(image)
+        local crosshairSize = 64
+        local x = (ScrW() - crosshairSize) / 2
+        local y = (ScrH() - crosshairSize) / 4
 
-function PANEL:ScrollBar()
-    if IsValid(self.scroll) then
-        self.scroll:Remove()
+        surface.DrawTexturedRect(x, y, crosshairSize, crosshairSize)
     end
-
-    self:Add("DScrollPanel")
-    self:Dock(FILL)
-    self:DrawMutations()
-end
-
-function PANEL:DrawMutations()
-    if IsValid(self.mutPanel) then
-        self.mutPanel:Remove()
-    end
-    self.mutPanel = self:Add("DPanel")
-
-end
-
-vgui.Register("YayoMutationFrame", PANEL, "DFrame")
+end)
