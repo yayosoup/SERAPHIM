@@ -1,1 +1,3 @@
-if true then return end
+concommand.Add("yayopill", function()
+    print(GetGlobalBool("crusaderCooldown", false))
+end)
