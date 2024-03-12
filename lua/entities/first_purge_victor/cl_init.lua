@@ -54,10 +54,6 @@ function ENT:Draw()
         self.csModel:DrawModel()
     end
 
-
-
-
-
     v.z = math.sin( CurTime() ) * 50
     if LocalPlayer():GetPos():Distance( self:GetPos() ) < 500 then
         local z = 850

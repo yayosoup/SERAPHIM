@@ -111,23 +111,6 @@ hook.Add("PlayerDeath", "YAYO_MUTATION.Hothead", function( vic, inf, atk)
     end
 end)
 
-hook.Add("PlayerHurt", "YAYO_Adrenaline", function(victim, attacker)
-    if victim:hasAdrenaline() && victim:Health() < victim:GetMaxHealth() == 0.15 then
-
-    end
-end)
-
-
-
-
-
-
-
-
-
-
-
-
 
 concommand.Add("debugtool", function( ply )
     local dmginfo = DamageInfo()

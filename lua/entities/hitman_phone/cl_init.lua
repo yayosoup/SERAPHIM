@@ -12,7 +12,7 @@ surface.CreateFont( "SeraphimFinalsSubSub", {
         weight = 500,
 } )
 
-local NPC_COLOR = Color(    200, 56, 56 )
+local NPC_COLOR = Color( 200, 56, 56 )
 local INNER_COLOR = Color( 26, 26, 32 )
 local v = Vector()
 local NPC_TITLE = "Ringing Phone"

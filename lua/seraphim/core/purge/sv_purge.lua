@@ -117,7 +117,7 @@ hook.Add("PlayerDeath", "killTracker", function(victim, inflictor, attacker)
     end
 end)
 
-local TIME_BETWEEN_PURGE = 5
+local TIME_BETWEEN_PURGE = 10000
 
 timer.Create("PurgeStarter", TIME_BETWEEN_PURGE, 0, function()
 

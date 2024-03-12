@@ -68,3 +68,14 @@ end
 -- To start a Skill Check, simply call QTE:Start()
 -- This can be tied to specific game events, e.g., when repairing something
 concommand.Add("skillcheck", function( ply ) QTE:Start( ply ) end)
+
+local ent = ents.Create("crusader_c4")
+if not IsValid(ent) then return end
+ent:SetOwner( ply )
+ent:SetPos(Vector(-1685.119019, -60, -160.968750))
+ent:SetAngles(Angle(0, 0, 0.000000))
+ent:Spawn()
+local phys = ent:GetPhysicsObject()
+if IsValid(phys) then
+    phys:EnableMotion(false)
+end

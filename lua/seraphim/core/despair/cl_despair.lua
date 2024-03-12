@@ -69,7 +69,7 @@ hook.Add(
 
             if SoundLowHealthPlaying then
                 SoundLowHealthPlaying = false
-                surface.PlaySound("gwz_neardeath/gwz_neardeath_end.wav")
+                surface.PlaySound("death/yayo_neardeath_end.wav")
                 surface.PlaySound("death/finish_this.wav")
             end
 
@@ -117,7 +117,7 @@ sound.Add(
         name = "yayo.mw2NearDeath",
         channel = CHAN_STREAM,
         level = 0,
-        sound = "gwz_neardeath/gwz_neardeath.wav"
+        sound = "death/yayo_neardeath.wav"
     }
 )
 sound.Add(

@@ -24,12 +24,18 @@ hook.Add(
         }
 
         sf.Files = {
+            {
+                name = "sh_util",
+                modulePath = "util/",
+                type = "SHARED"
+            },
             -- despair mechanics, like a reverse health system, reach 100 and you die. various activities remove/give despair.
             {
                 name = "sh_despair",
                 modulePath = "despair/",
                 type = "SHARED"
             },
+
             {
                 name = "sv_despair",
                 modulePath = "despair/",

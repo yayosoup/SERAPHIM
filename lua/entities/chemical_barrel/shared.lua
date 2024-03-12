@@ -1,16 +1,15 @@
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 
-ENT.PrintName = "crusader_c4"
+ENT.PrintName = "chemical_barrel"
 ENT.Author = "yayo"
 ENT.Contact = "yayosoup@gmail.com"
-ENT.Purpose = "crusader_c4"
+ENT.Purpose = "chemical_barrel"
 ENT.Instructions = "base npc entity"
 ENT.Category = "yayoitems"
 ENT.Spawnable = true
 
 
 function ENT:SetupDataTables()
-    self:NetworkVar("Bool", 0, "bombPlanted")
-    self:NetworkVar("Bool", 1, "bombDefused")
+
 end

@@ -45,8 +45,7 @@ function YAYO_MUTATION.Open()
         draw.RoundedBox(0, 0, 0, w, h, Color(30, 30, 30, 200))
 
         local cells = LocalPlayer():GetCells()
-        surface.SetDrawColor( 28, 28, 36 )
-        draw.RoundedBox(5 , 0, 0, w, h, Color( 28, 28, 36))
+        draw.RoundedBox(5 , 0, 0, w, h, yayo_util.Config.BackgroundGui)
         draw.SimpleText("You have " .. cells .. " Cells", YayoFont, w / 2 , h * 0.015,
         color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText("You have " .. playerMutation .. "/5" .. " Mutations", YayoFont, w / 2 , h * 0.030,
@@ -127,7 +126,7 @@ function YAYO_MUTATION.Open()
 
         itemPanel.Paint = function(me,w,h)
             local padding = w * 0.07
-            surface.SetDrawColor( 36, 39, 46 )
+            surface.SetDrawColor( yayo_util.Config.BackgroundItemPanel )
             surface.DrawRect(0,0,w,h)
             draw.SimpleText(v.name, "YayoWorkSans35", padding , h * 0.1,
             color_red, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)

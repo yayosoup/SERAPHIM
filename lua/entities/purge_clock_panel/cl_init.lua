@@ -7,7 +7,7 @@ local isPurgeActive = false
 surface.CreateFont( "AWESOME", {
         font = "FinalsNotoSans", --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
         extended = false,
-        size = 4000,
+        size = 400,
         weight = 500,
         blursize = 0,
         scanlines = 0,
@@ -24,7 +24,7 @@ surface.CreateFont( "AWESOME", {
 surface.CreateFont( "AWESOMEFOOTER", {
         font = "FinalsNotoSans", --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
         extended = false,
-        size = 25,
+        size = 100,
         weight = 500,
         blursize = 0,
         scanlines = 0,
@@ -55,6 +55,15 @@ surface.CreateFont( "AWESOMEACTIVE", {
         additive = false,
         outline = false,
 } )
+surface.CreateFont(
+  "vestedfont_32",
+  {
+    font = "Bebas Neue",
+    size = 75,
+    weight = 300,
+    antialias = true,
+  }
+)
 
 local PURGE_COLOR = Color(210, 31, 60)
 local BLACK = Color(0, 0, 0)
@@ -81,72 +90,63 @@ function ENT:Draw()
         return
     end
 
+    local ang = self:GetAngles()
+    ang:RotateAroundAxis(ang:Right(), 0)
+    ang:RotateAroundAxis(ang:Up(), 0)
+    local pos = self:GetPos()
+    local offset = ang:Up() * 2
+    pos = pos + offset
+    local s = .1
+
+    local w = 74 * (3 / s)
+    local h = 39 * (3 / s)
+    local z = -w / 2
+    local z2 = -h / 2
+
     self:DrawModel()
-    if isPurgeActive then
-        if imgui.Entity3D2D(self, POSITION, ANGLE_1, SCALE_1, WIDTH, HEIGHT) then
-            -- background color
+
+    if isPurgeActive == false then
+        cam.Start3D2D(pos, ang, s)
+            local lpx = z + 20
+            local lpy = z2 + h * .1 - 895
+            local lpw = w - 40
+            local lph = h - h * .1 - 40
+            local pph = lph / 10
+
             surface.SetDrawColor(PURGE_COLOR)
-            surface.DrawRect(-1380, -1420, 2845, 2370)
-
-            surface.SetDrawColor(BLACK)
-            surface.DrawRect(-1000, -1370, 1000, 2270)
-
-            imgui.End3D2D()
-        end
-
-        if imgui.Entity3D2D(self, POSITION2, ANGLE_1, SCALE_1, WIDTH, HEIGHT) then
-            -- header
-            surface.SetDrawColor(255,255,255)
-            surface.DrawRect(-1350, -1420, 10, 2370)
-
-
-            imgui.End3D2D()
-        end
-        if imgui.Entity3D2D(self, POSITION2, ANGLE_1, SCALE_1, WIDTH, HEIGHT) then
-            -- footer white
-            surface.SetDrawColor(255,255,255)
-            surface.DrawRect(-3950, -1420, 10, 2370)
-
-
-            imgui.End3D2D()
-        end
-        if imgui.Entity3D2D(self, POSITION2, ANGLE_1, SCALE_1, WIDTH, HEIGHT) then
-            -- footer black
-            surface.SetDrawColor(0,0,0)
-            surface.DrawRect(-4070, -1420, 120, 2370)
-
-
-            imgui.End3D2D()
-        end
-
-        if imgui.Entity3D2D(self, POSITION, ANGLE_2, SCALE_2, WIDTH, HEIGHT) then
-                draw.SimpleText("PURGE", "AWESOME", -45, -150, WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            imgui.End3D2D()
-        end
-
-        if imgui.Entity3D2D(self, POSITION, ANGLE_2, SCALE_2, WIDTH, HEIGHT) then
-            if math.sin(CurTime() * FLASH_FREQUENCY) > 0 then
-                draw.SimpleText("ACTIVE", "AWESOMEACTIVE", -45, 100, WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            surface.DrawRect(-1185, -1450, 2370, 2850)
+            draw.RoundedBox(0, z + 20, z2 + h * .1 + 150, w - 40, h - h * .1 - 40, Color(0, 0, 0, 150))
+            draw.RoundedBox(0, z + 20, z2 + h * .1 - 900, w - 40, h - h * .1 - 40, Color(0, 0, 0, 150))
+            for k, v in pairs(VSCOREBOARDDATA) do
+                if not (k > 10) then
+                    local cury = lpy + pph * (k - 1)
+                    draw.RoundedBox(0, lpx, cury, lpw, pph, Color(30, 30, 30, k % 2 == 0 and 130 or 0))
+                    draw.SimpleText(k, "vestedfont_32", lpx + 10, cury, Color(255, 255, 255))
+                    draw.SimpleText(v.nick, "vestedfont_32", lpx + 40, cury, Color(255, 255, 255))
+                    draw.SimpleText("$" .. string.Comma(v.money), "vestedfont_32", lpw - 1100, cury, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
+                end
             end
+            for k, v in pairs(DarkRP.getLaws()) do
+                if not (k > 10) then
+                    local cury = lpy + pph * (k - 1)
+                    draw.RoundedBox(2, lpx, cury + 1050, lpw, pph, Color(30, 30, 30, k % 2 == 0 and 130 or 0))
+                    draw.SimpleText(k, "vestedfont_32", lpx + 5, cury + 1050, Color(255, 255, 255))
+                    draw.SimpleText(v, "vestedfont_32", lpx + 80, cury + 1050, Color(255, 255, 255))
+                end
+            end
+            draw.RoundedBox(0, z + 500, z2 + h * .1 + 1250, w - 1000, h - h * .1 - 750, Color(0, 0, 0, 255))
+            draw.SimpleText("NO EVENT ACTIVE", "AWESOME", lpx + 520, lpx + 1900, Color(255, 255, 255))
 
-            imgui.End3D2D()
-        end
-        if imgui.Entity3D2D(self, POSITION, ANGLE_2, SCALE_2, WIDTH, HEIGHT) then
-                draw.SimpleText("SERAPHIM.GG", "AWESOMEFOOTER", -45, 263, WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            imgui.End3D2D()
-        end
-    elseif isPurgeActive == false then
-        if imgui.Entity3D2D(self, POSITION, ANGLE_1, SCALE_1, WIDTH, HEIGHT) then
-            -- background color
-            surface.SetDrawColor(PURGE_COLOR)
-            surface.DrawRect(-1380, -1420, 2845, 2370)
-            imgui.End3D2D()
-        end
-        if imgui.Entity3D2D(self, POSITION, ANGLE_2, SCALE_2, WIDTH, HEIGHT) then
-            draw.SimpleText("NO", "AWESOME", -45, -150, WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            draw.SimpleText("EVENT", "AWESOMEACTIVE", -45, 0, WHITE, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            imgui.End3D2D()
-        end
+            draw.RoundedBox(0, z - 75, z2 + h * .1 + 1730, w + 150, h - h * .1 - 895, Color(0, 0, 0, 255))
+            surface.SetDrawColor(255, 255, 255, 255)
+            surface.DrawLine(z - 75, z2 + h * .1 + 1730, z - 75 + w + 150, z2 + h * .1 + 1730)
+            local boxCenterX = z - 75 + (w + 165) / 2
+            local boxCenterY = z2 + h * .1 + 1730 + (h - h * .1 - 895) / 2
+
+            draw.SimpleText("SERAPHIM.GG", "AWESOMEFOOTER", boxCenterX, boxCenterY, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+
+        cam.End3D2D()
     end
 end
 
