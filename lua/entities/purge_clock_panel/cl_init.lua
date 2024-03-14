@@ -24,7 +24,7 @@ surface.CreateFont( "AWESOME", {
 surface.CreateFont( "AWESOMEFOOTER", {
         font = "FinalsNotoSans", --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
         extended = false,
-        size = 100,
+        size = 85,
         weight = 500,
         blursize = 0,
         scanlines = 0,
@@ -58,25 +58,14 @@ surface.CreateFont( "AWESOMEACTIVE", {
 surface.CreateFont(
   "vestedfont_32",
   {
-    font = "Bebas Neue",
-    size = 75,
-    weight = 300,
+    font = "FinalsNotoSans",
+    size = 100,
+    weight = 500,
     antialias = true,
   }
 )
 
 local PURGE_COLOR = Color(210, 31, 60)
-local BLACK = Color(0, 0, 0)
-local WHITE = Color(255, 255, 255)
-local FLASH_FREQUENCY = 5
-local POSITION = Vector(24,-4,1.6)
-local POSITION2 = Vector(24,265,1.6)
-local ANGLE_1 = Angle(0,90,0)
-local ANGLE_2 = Angle(0,0,0)
-local SCALE_1 = 0.1
-local SCALE_2 = 0.5
-local WIDTH = 2000
-local HEIGHT = 2000
 
 net.Receive("PurgeStateChanged", function()
     isPurgeActive = net.ReadBool()
@@ -130,7 +119,7 @@ function ENT:Draw()
                 if not (k > 10) then
                     local cury = lpy + pph * (k - 1)
                     draw.RoundedBox(2, lpx, cury + 1050, lpw, pph, Color(30, 30, 30, k % 2 == 0 and 130 or 0))
-                    draw.SimpleText(k, "vestedfont_32", lpx + 5, cury + 1050, Color(255, 255, 255))
+                    draw.SimpleText(k, "vestedfont_32", lpx + 10, cury + 1050, Color(255, 255, 255))
                     draw.SimpleText(v, "vestedfont_32", lpx + 80, cury + 1050, Color(255, 255, 255))
                 end
             end
