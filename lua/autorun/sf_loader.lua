@@ -208,6 +208,26 @@ hook.Add(
                 modulePath = "skinshape/",
                 type = "CLIENT"
             },
+            {
+                name = "sv_ccmaker_core",
+                modulePath = "custom_jobs/",
+                type = "SERVER"
+            },
+            {
+                name = "sh_ccmaker_core",
+                modulePath = "custom_jobs/",
+                type = "SHARED"
+            },
+            {
+                name = "cl_ccmaker_core",
+                modulePath = "custom_jobs/",
+                type = "CLIENT"
+            },
+            {
+                name = "cl_ccmaker_frame",
+                modulePath = "custom_jobs/",
+                type = "CLIENT"
+            },
 
         }
 
