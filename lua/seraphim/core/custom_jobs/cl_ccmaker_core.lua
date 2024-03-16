@@ -26,14 +26,9 @@ function CCMaker.Open()
     CCMaker.Frame:ShowCloseButton(false)
 
     CCMaker.Frame.Paint = function(me,w,h)
-        Derma_DrawBackgroundBlur(me, me.m_fCreateTime)
         draw.RoundedBox(0, 0, 0, w, h, Color(30, 30, 30, 200))
 
-        local cells = LocalPlayer():GetCells()
         draw.RoundedBox(5 , 0, 0, w, h, yayo_util.Config.BackgroundGui)
-        draw.SimpleText("You have " .. cells .. " Cells", YayoFont, w / 2 , h * 0.015,
-        color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-
     end
 
 
@@ -55,4 +50,35 @@ function CCMaker.Open()
     closeButton.DoClick = function()
         CCMaker.Frame:Close()
     end
+
+    local className = vgui.Create( "DTextEntry", CCMaker.Frame )
+    className:SetSize( frameW * 0.5, frameH * 0.05 )
+    className:SetPlaceholderText( "Class Name" )
+
+    local mixer = vgui.Create( "DColorMixer", CCMaker.Frame )
+    mixer:SetPalette( false )
+    mixer:SetAlphaBar( false )
+    mixer:SetWangs( false )
+    mixer:SetSize( frameW * 0.5, frameH * 0.2 )
+    mixer:SetPos( frameW * 0, frameH * 0.05 )
+
+    local buyPolice = vgui.Create("DButton", CCMaker.Frame)
+    buyPolice:SetSize(frameW * 0.5, frameH * 0.05)
+    buyPolice:SetPos(frameW * 0, frameH * 0.25)
+    buyPolice:SetText("Police Class/Tools")
+
+    local buyModel = vgui.Create("DButton", CCMaker.Frame)
+    buyModel:SetSize(frameW * 0.5, frameH * 0.05)
+    buyModel:SetPos(frameW * 0, frameH * 0.30)
+    buyModel:SetText("Choose model")
+
+    local buyWithCash = vgui.Create("DButton", CCMaker.Frame)
+    buyWithCash:SetSize(frameW * 0.25, frameH * 0.05)
+    buyWithCash:SetPos(frameW * 0, frameH * 0.35)
+    buyWithCash:SetText("Buy with DarkRP Cash")
+
+    local buyWithCells = vgui.Create("DButton", CCMaker.Frame)
+    buyWithCells:SetSize(frameW * 0.25, frameH * 0.05)
+    buyWithCells:SetPos(frameW * .25, frameH * 0.35)
+    buyWithCells:SetText("Buy with Cells")
 end
