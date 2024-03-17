@@ -14,3 +14,4 @@ hook.Add(
         net.Send( ply )
     end
 end)
+PrintTable( RPExtraTeams )

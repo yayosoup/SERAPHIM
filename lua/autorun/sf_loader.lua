@@ -219,6 +219,16 @@ hook.Add(
                 type = "SHARED"
             },
             {
+                name = "sh_ccmaker_data",
+                modulePath = "custom_jobs/",
+                type = "SHARED"
+            },
+            {
+                name = "sv_ccmaker_data",
+                modulePath = "custom_jobs/",
+                type = "SERVER"
+            },
+            {
                 name = "cl_ccmaker_core",
                 modulePath = "custom_jobs/",
                 type = "CLIENT"

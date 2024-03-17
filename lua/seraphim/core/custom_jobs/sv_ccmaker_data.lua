@@ -7,7 +7,7 @@ function CCMaker.PrepareData()
     end
 
     for dir, active in pairs( CCMaker.Data.SubFolders ) do
-        dir = mainPath .. "/" .. dir
+        dir = main .. "/" .. dir
         -- if the sub folder does not exist, create it
         if not file.Exists(dir, "DATA") then
             file.CreateDir(dir)
@@ -17,7 +17,7 @@ end
 
 -- sava data of type job
 -- TODO: SAVE JOB DATA BASED OFF STEAM ID FOR INIT SPAWN RETRIEVAL
-function CCMaker.SaveJobData( job )
+function CCMaker.SaveJobData( ply )
     local fileInfo = CCMaker.Data.FileManager[ job ]
     local msg
 
@@ -47,6 +47,11 @@ function CCMaker.SaveJobData( job )
     file.Write(saveDir, util.TableToJSON(dataToSave, true))
 
     return true
+end
+
+-- load job data for steamid
+function CCMaker.LoadJobData( ply )
+
 end
 -- prepare file structures to receive data
 hook.Add(
