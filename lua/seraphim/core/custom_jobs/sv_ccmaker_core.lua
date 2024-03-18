@@ -14,4 +14,8 @@ hook.Add(
         net.Send( ply )
     end
 end)
-PrintTable( RPExtraTeams )
+net.Receive("yayo_CCMaker_CreateJob", function ( len, ply )
+
+
+
+end)
