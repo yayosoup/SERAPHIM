@@ -20,7 +20,7 @@ function ENT:Use( ply )
 end
 
 function ENT:StartTouch( ent )
-    if not ent:GetClass() == "tech_trash" or not ent:GetClass() == "chemical_filled_barrel" then return end
+    if not ent:GetClass() == "tech_trash" or not ent:GetClass() == "chemical_filled_barrel" or not ent:GetClass() == "wood" then return end
     if ent:GetClass() == "tech_trash" then
         ent:Remove()
         local tech = self:GetTechTrash()
