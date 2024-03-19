@@ -29,7 +29,6 @@ hook.Add(
                 modulePath = "util/",
                 type = "SHARED"
             },
-            -- despair mechanics, like a reverse health system, reach 100 and you die. various activities remove/give despair.
             {
                 name = "sh_despair",
                 modulePath = "despair/",

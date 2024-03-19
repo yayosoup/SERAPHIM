@@ -8,6 +8,7 @@ function PANEL:Init()
     self:ShowCloseButton( true )
     self:MakePopup()
     self.jobData = {}
+    self.jobData.Police = false
 
     local frameW, frameH = scrw * 0.4, scrh * .65
     self:SetSize( frameW, frameH )
@@ -20,14 +21,19 @@ function PANEL:Init()
 
 
     local className = self:CreateTextBox(self.bodyPanel, "", self.bodyPanel:GetWide() * 0.02, self.bodyPanel:GetTall() * 0.2, self.bodyPanel:GetWide() * 0.45 , self.bodyPanel:GetTall())
-    className.DoChange = function()
-        table.insert(self.jobData, "classname")
+    local panel = self
+    className.OnEnter = function( yes )
+        local jobName = yes:GetValue()
+        print(jobName)
+        panel.jobData.CustomName = jobName
+        PrintTable( self.jobData )
     end
     self:CreateColorPicker(self.bodyPanel, self.bodyPanel:GetWide() * 0.02, self.bodyPanel:GetTall() * 2.15, self.bodyPanel:GetWide() * 0.45 , self.bodyPanel:GetTall() * 3.5)
     self:CreateButton(self.bodyPanel, "Hitman Access", self.bodyPanel:GetWide() * 0.02, self.bodyPanel:GetTall() * 6, self.bodyPanel:GetWide() * 0.45 , self.bodyPanel:GetTall())
     local chooseModel = self:CreateButton(self.bodyPanel, "Choose Model", self.bodyPanel:GetWide() * 0.02, self.bodyPanel:GetTall() * 7, self.bodyPanel:GetWide() * 0.45 , self.bodyPanel:GetTall())
     chooseModel.DoClick = function()
         table.insert(self.jobData, "model")
+        PrintTable( self.jobData )
     end
     local buyDarkRPCash = self:CreateButton(self.bodyPanel, "Buy | DarkRP Cash", self.bodyPanel:GetWide() * 0.02, self.bodyPanel:GetTall() * 8, self.bodyPanel:GetWide() * 0.225 , self.bodyPanel:GetTall())
     buyDarkRPCash.DoClick = function()

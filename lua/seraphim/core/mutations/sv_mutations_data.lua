@@ -24,13 +24,13 @@ function TEXT:LoadMutations( ply )
     local json = file.Read("seraphim/mutation/" .. (ply:SteamID64() or "0") .. ".txt", "DATA")
 
     if json then
-    local inv = util.JSONToTable( json )
+        local inv = util.JSONToTable( json )
 
-    if inv then
-        for k,v in pairs ( inv ) do
-            ply:SetNWBool( k, v )
-            ply:SetNWInt( "mutationCount", ply:GetNWInt( "mutationCount" ) + 1 )
-        end
+        if inv then
+            for k,v in pairs ( inv ) do
+                ply:SetNWBool( k, v )
+                ply:SetNWInt( "mutationCount", ply:GetNWInt( "mutationCount" ) + 1 )
+            end
     end
 end
 
