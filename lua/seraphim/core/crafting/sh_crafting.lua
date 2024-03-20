@@ -1,5 +1,5 @@
-yayo_crafting = yayo_crafting or {}
-yayo_crafting.recipes = {
+yayo.crafting = yayo.crafting or {}
+yayo.crafting.recipes = {
     ["C-AE Phfsafasma"] = {
         ingredients = {
             ["tech_trash"] = 10,

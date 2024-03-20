@@ -1,5 +1,5 @@
 local PANEL = {}
-yayo_crafting.Tabs = {
+yayo.crafting.Tabs = {
     {
         title = "Jobs",
         icon = Material("dconfig/job.png"),
@@ -90,7 +90,7 @@ function PANEL:Init()
     self.scroll = self:Add("YCRAFTScrollBar")
     self.scroll:Dock( FILL )
 
-    for k,tabData in ipairs( yayo_crafting.Tabs ) do
+    for k,tabData in ipairs( yayo.crafting.Tabs ) do
         local tab = self.scroll:Add( "DButton" )
         tab:Dock( TOP )
         tab:SetText( "good morning" )

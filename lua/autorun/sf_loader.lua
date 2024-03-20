@@ -30,6 +30,11 @@ hook.Add(
                 type = "SHARED"
             },
             {
+                name = "cl_util",
+                modulePath = "util/",
+                type = "CLIENT"
+            },
+            {
                 name = "sh_despair",
                 modulePath = "despair/",
                 type = "SHARED"
@@ -272,11 +277,15 @@ hook.Add(
                 modulePath = "crafting/",
                 type = "CLIENT"
             },
+            {
+                name = "cl_crafting_recipe",
+                modulePath = "crafting/",
+                type = "CLIENT"
+            },
 
         }
 
         function sf.Load()
-            print("sf.Load has intialized!")
             local root, core = sf.Folders["root"], sf.Folders["core"]
             for k, v in pairs(sf.Files) do
                 v.name = v.name .. ".lua"

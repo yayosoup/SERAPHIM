@@ -1,3 +1,3 @@
-net.Receive("yayo_crafting_openMenu", function()
-    yayo_crafting.Open()
+net.Receive("yayo.craftingOpenMenu", function()
+    yayo.crafting.Open()
 end)

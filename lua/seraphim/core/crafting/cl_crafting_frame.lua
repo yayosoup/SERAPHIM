@@ -1,5 +1,5 @@
-function yayo_crafting.Open()
-    yayo_crafting.ScreenPanel = vgui.Create("YCRAFTDFrame")
+function yayo.crafting.Open()
+    yayo.crafting.ScreenPanel = vgui.Create("YCRAFTDFrame")
 end
 
 local PANEL = {}
@@ -25,7 +25,7 @@ end
 function PANEL:Paint( w, h )
 
     local text = "SPH v0.1 | UI WILL CHANGE | TY FOR PLAYING. FROM CALIFORNIA,WITH ♥"
-    local font = "DermaDefault"
+    local font = yayo.util.Font( 17 )
     surface.SetFont(font)
     local textW, textH = surface.GetTextSize(text)
 
@@ -34,7 +34,7 @@ function PANEL:Paint( w, h )
     local boxX = (w - boxW) / 2
     local boxY = (h / 50) - (boxH / 2)
 
-    draw.RoundedBox(20, boxX, boxY, boxW, boxH, yayo_util.Config.BackgroundGui) -- Change the color and corner radius as needed
+    draw.RoundedBox(8, boxX, boxY, boxW, boxH, yayo_util.Config.BackgroundGui) -- Change the color and corner radius as needed
     draw.SimpleText(text, font, w / 2, h / 50, yayo_util.Config.HealthBarGreen, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
