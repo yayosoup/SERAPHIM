@@ -237,6 +237,41 @@ hook.Add(
                 modulePath = "custom_jobs/",
                 type = "CLIENT"
             },
+            {
+                name = "sv_crafting",
+                modulePath = "crafting/",
+                type = "SERVER"
+            },
+            {
+                name = "sh_crafting",
+                modulePath = "crafting/",
+                type = "SHARED"
+            },
+            {
+                name = "cl_crafting_core",
+                modulePath = "crafting/",
+                type = "CLIENT"
+            },
+            {
+                name = "cl_crafting_frame",
+                modulePath = "crafting/",
+                type = "CLIENT"
+            },
+            {
+                name = "cl_crafting_nav",
+                modulePath = "crafting/",
+                type = "CLIENT"
+            },
+            {
+                name = "cl_crafting_body",
+                modulePath = "crafting/",
+                type = "CLIENT"
+            },
+            {
+                name = "cl_crafting_scroll",
+                modulePath = "crafting/",
+                type = "CLIENT"
+            },
 
         }
 

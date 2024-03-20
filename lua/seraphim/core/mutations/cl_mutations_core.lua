@@ -104,13 +104,6 @@ function YAYO_MUTATION.Open()
     function sbar.btnGrip:Paint(w, h)
         draw.RoundedBox(8, w * 0.5, 0, w * .4, h, Color( 36, 39, 46 ))
     end
-    local keys = {}
-    for k in pairs(YAYO_MUTATION.Catalog) do
-        table.insert(keys, k)
-    end
-
-    table.sort(keys)
-
 
     local yspace = frameH * 0.005
     for k,v in pairs( YAYO_MUTATION.Catalog ) do
