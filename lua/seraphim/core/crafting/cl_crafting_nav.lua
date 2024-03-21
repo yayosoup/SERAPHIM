@@ -4,7 +4,7 @@ yayo.crafting.Tabs = {
         title = "Jobs",
         icon = Material("dconfig/job.png"),
         callback = function()
-            DCONFIG2.OpenEditor("jobs")
+            yayo.crafting.OpenRecipe()
         end,
     },
     {
@@ -90,13 +90,49 @@ function PANEL:Init()
     self.scroll = self:Add("YCRAFTScrollBar")
     self.scroll:Dock( FILL )
 
+    self.tabs = {}
+    self:GetParent().page = self:GetParent().page or 1
     for k,tabData in ipairs( yayo.crafting.Tabs ) do
         local tab = self.scroll:Add( "DButton" )
         tab:Dock( TOP )
         tab:SetText( "good morning" )
+
+        tab.DoClick = function()
+            if self:GetParent().page == k then return end
+            yayo.crafting.ClearBody()
+            tabData.callback()
+            -- if tabData is close then playsound close
+            self:GetParent().page = k
+        end
     end
 
+    timer.Simple(
+        .5,
+        function()
+            yayo.crafting.Tabs[self:GetParent().page].callback()
+        end
+    )
+
 end
+
+function PANEL:OnMouseWheeled( scrollDelta )
+    local curPage = self:GetParent().page
+    local newPage = curPage - scrollDelta
+    if not yayo.crafting.Tabs[nextPage] or nextPage == table.Count( yayo.crafting.Tabs ) then return end
+    self.tabs[curPage].fade = 1
+    self:GetParent().page = newPage
+    DCONFIG2.PlaySound( "click" )
+    timer.Create(
+        "updatePage",
+        .15,
+        1,
+        function()
+            yayo.crafting.ClearBody()
+            print("hello bro")
+        end
+    )
+end
+
 function PANEL:Paint(w, h)
     draw.RoundedBoxEx(20, 0, 0, w, h, yayo_util.Config.BackgroundItemPanel, true, false, true, false)
 end

@@ -1,6 +1,4 @@
-function yayo.crafting.Open()
-    yayo.crafting.ScreenPanel = vgui.Create("YCRAFTDFrame")
-end
+function yayo.crafting.Open() yayo.crafting.ScreenPanel = vgui.Create("YCRAFTDFrame") end
 
 local PANEL = {}
 
