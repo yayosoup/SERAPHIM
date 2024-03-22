@@ -1,17 +1,17 @@
 local PANEL = {}
 yayo.crafting.Tabs = {
     {
-        title = "Jobs",
+        title = "blue",
         icon = Material("dconfig/job.png"),
         callback = function()
-            yayo.crafting.OpenRecipe()
+            yayo.crafting.OpenRecipe( "blue" )
         end,
     },
     {
-        title = "Shipments",
+        title = "red",
         icon = Material("dconfig/shipment.png"),
         callback = function()
-            DCONFIG2.OpenEditor("shipments")
+            yayo.crafting.OpenRecipe( "red" )
         end,
     },
     {
@@ -92,10 +92,10 @@ function PANEL:Init()
 
     self.tabs = {}
     self:GetParent().page = self:GetParent().page or 1
-    for k,tabData in ipairs( yayo.crafting.Tabs ) do
+    for k,tabData in ipairs( yayo.crafting.recipes ) do
         local tab = self.scroll:Add( "DButton" )
         tab:Dock( TOP )
-        tab:SetText( "good morning" )
+        tab:SetText( tabData.name )
 
         tab.DoClick = function()
             if self:GetParent().page == k then return end
