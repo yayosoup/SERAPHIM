@@ -15,6 +15,7 @@ function PANEL:Init()
 end
 function PANEL:SetRecipe( recipe, recipeData )
     self.recipe = recipe
+    self.recipeData = recipeData
 end
 
 function PANEL:Paint( w, h )
