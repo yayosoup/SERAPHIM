@@ -23,7 +23,7 @@ function PANEL:Paint( w, h )
         draw.RoundedBoxEx(20, 0, 0, w, h, Color( 255, 0 ,0 ), false, true, false, true)
     elseif self.recipe == "blue" then
         --draw.RoundedBoxEx(20, 0, 0, w, h, Color( 0, 0, 255 ), false, true, false, true)
-        draw.SimpleText("good morning angel", yayo.util.Font( 50 ), w / 2, h / 5, yayo_util.Config.HealthBarGreen, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText("good morning angel", yayo.util.Font( 50 ), w / 2, h / 10, yayo_util.Config.HealthBarGreen, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 end
 
