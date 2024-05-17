@@ -1,4 +1,8 @@
-S>E>R>A>P>H>I>M is a project I started to learn Garry's Mod and LUA. It's scripts are now open source to use, but some may still be in progress. The key features are:
+S>E>R>A>P>H>I>M is a project I started to learn Garry's Mod and LUA. It's scripts are now open source to use, but some may still be in progress. 
+A Garry's Mod Server is required to see these scripts, find out here how to make one for free:
+https://www.youtube.com/watch?v=IVhzQMIGi5Q
+
+The key features are:
 * Event Scoreboard obviously inspired by THE FINALS game, which also includes a Law Board and Money Scoreboard
 * Events system with PURGE event already built
 * Multiple DarkRP jobs, such as the Crusader/Martyr
